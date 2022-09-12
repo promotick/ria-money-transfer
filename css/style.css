@@ -3983,7 +3983,7 @@ DS .product-list .product-item {
 }
 
 .widget_recent_product .product-thumb {
-    width: 80px;
+    width: 100px;
     float: left;
 }
 
@@ -6860,6 +6860,7 @@ table.group-product > tbody > tr > td {
     border: 1px solid #eee;
     border-color: #eee;
     vertical-align: middle;
+    background-color: #fff;
 }
 
 table.group-product > tbody > tr > th {

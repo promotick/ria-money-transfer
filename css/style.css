@@ -10231,6 +10231,7 @@ textarea.form-control {
     padding: 14px 20px 10px;
     text-align: center;
     border-radius: 14px;
+    background-color: #fff;
 }
 
 .border-country:hover{

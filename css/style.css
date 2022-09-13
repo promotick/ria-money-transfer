@@ -3584,6 +3584,7 @@ DS .product-list .product-item {
     font-family: 'Roboto';
     color: #555;
     display: inline-block;
+    margin-top: 8px;
 }
 
 .breadcrumbs a:after {
@@ -10065,6 +10066,7 @@ li.info-pts {
     border: 2px solid #FF5700;
     border-radius: 3px;
     color: #FF5700;
+    background-color: #fff;
 }
 
 .sty-btn input[type="checkbox"]:checked + span {

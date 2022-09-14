@@ -10051,6 +10051,10 @@ li.info-pts {
     font-weight: 600;
 }
 
+.chosen-container {
+    width: 100%!important;
+}
+
 /* .header.style3 .main-menu > li:nth-last-child(4),
 .header.style3 .main-menu > li:nth-last-child(5) {
     display: none;

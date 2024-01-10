@@ -1442,7 +1442,7 @@ blockquote.style2:after {
 
 .box-search {
     position: relative;
-    font-family: 'Roboto';
+   
 }
 
 .box-search .search {
@@ -1459,9 +1459,9 @@ blockquote.style2:after {
     font-size: 24px;
     background-color: transparent;
     border: none;
-    width: 50px;
-    height: 50px;
-    line-height: 54px;
+    width: 40px;
+    height: 34px;
+    line-height: 37px;
     text-align: center;
 }
 
@@ -1591,7 +1591,7 @@ blockquote.style2:after {
 }
 
 .setting-option {
-    font-family: 'Roboto';
+   
     padding-top: 13px;
 }
 
@@ -1721,7 +1721,7 @@ blockquote.style2:after {
 
 .header.style3 .box-control {
     width: auto;
-    float: right;
+    float: left;
 }
 
 .header.style3 .slogan {
@@ -1732,7 +1732,7 @@ blockquote.style2:after {
     color: #222;
 }
 
-.header.style3 .box-search,
+ .box-search,
 .header.style3 .mini-cart,
 .header.style3 .box-settings {
     display: table-cell;
@@ -1756,15 +1756,15 @@ blockquote.style2:after {
     /*	font-weight: 600;*/
 }
 
-.header.style3 .box-search {
+ .box-search {
     background: #fff;
     border-radius: 44px;
-    width: 220px;
+    width: 270px;
     border: 1px solid #e5e5e5;
     padding-left: 10px;
 }
 
-.header.style3 .box-search .search {
+ .box-search .search {
     padding: 5px;
 }
 
@@ -9328,7 +9328,8 @@ RESPONSIVE
     .header.style3 .mini-cart .count {
         top: -20px;
     }
-    .header.style3 .box-search .search {
+    
+    .box-search .search {
         padding: 10px 0;
         background: transparent;
     }
@@ -9686,9 +9687,9 @@ RESPONSIVE
 }
 
 li.info-pts {
-    border-radius: 25px;
+    border-radius: 20px;
     background-color: #FF5700;
-    padding: 11px 18px;
+    padding: 8px 23px;
     background-repeat: no-repeat;
     background-position: top left;
     margin-right: 20px;

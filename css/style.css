@@ -3700,7 +3700,7 @@ DS .product-list .product-item {
 
 .widget .widget-title {
     font-size: 15px;
-    text-transform: uppercase;
+ 
     margin-bottom: 15px;
     position: relative;
 }
@@ -4342,7 +4342,7 @@ FOOTER
     font-size: 19px;
     color: #eeeeee;
     margin-bottom: 20px;
-    text-transform: uppercase;
+  
 }
 
 .footer .widget .widget-title:after {
@@ -4937,7 +4937,7 @@ FOOTER
 
 .section-title h3 {
     font-size: 24px;
-    text-transform: uppercase;
+   
     color: #222;
     margin-bottom: 0;
     position: relative;
@@ -5744,7 +5744,7 @@ FOOTER
 
 .tab-product .nav-tab li a {
     font-size: 16px;
-    text-transform: uppercase;
+
     color: #000;
     position: relative;
 }
@@ -6869,7 +6869,7 @@ table.group-product > tbody > tr > td {
 table.group-product > tbody > tr > th {
     background-color: #eee;
     border: none;
-    text-transform: uppercase;
+ 
 }
 
 table.group-product a {

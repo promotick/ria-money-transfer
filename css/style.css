@@ -1012,7 +1012,7 @@ blockquote.style2:after {
 
 .main-menu > li > a {
     padding: 13px 0;
-    text-transform: uppercase;
+    
     display: inline-block;
     color: #333;
     font-size: 12px;

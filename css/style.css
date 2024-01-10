@@ -201,6 +201,7 @@ input[type="tel"] {
     padding: 6px 15px;
     color: #747474;
     max-width: 100%;
+    border-radius: 5px;
 }
 
 input[type="text"]:focus,
@@ -247,16 +248,17 @@ input[type="submit"] {
     display: inline-block;
     padding: 9px 25px;
     text-align: center;
-    text-transform: uppercase;
+    
     -webkit-transition: all 0.3s ease 0s;
     -o-transition: all 0.3s ease 0s;
     transition: all 0.3s ease 0s;
     background: transparent;
     position: relative;
     background-color: #FF5700;
-    font-size: 12px;
+    font-size: 14px;
     border: none;
     font-weight: 600;
+    border-radius: 20px;
 }
 
 

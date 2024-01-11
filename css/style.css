@@ -10229,7 +10229,8 @@ textarea.form-control {
 
 .border-country img{
     max-width: 80px;
-    border-radius: 4px;
+    height: 80px;
+    border-radius: 50%;
 }
 
 .border-country{

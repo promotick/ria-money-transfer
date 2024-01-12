@@ -10256,3 +10256,6 @@ textarea.form-control {
     color: #303038;
     font-weight: 500;
 }
+.language .dropdown .dropdown-flag {
+        width: 20px;
+}

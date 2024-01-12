@@ -10215,9 +10215,11 @@ textarea.form-control {
     display: flex;
     flex-wrap: wrap;
     list-style: none;
+    gap: 12px;
+    justify-content: center;
 }
 .country-ref{
-    width: calc(100% / 5 - 60px / 5);
+    width: calc(100% / 5 - 100px / 5);
 }
 
 .country-ref:not(:nth-child(1n)){
@@ -10228,8 +10230,8 @@ textarea.form-control {
 }
 
 .border-country img{
-    max-width: 80px;
-    height: 80px;
+    max-width:65px;
+    height: 65px;
     border-radius: 50%;
 }
 

@@ -6430,7 +6430,7 @@ FOOTER
 .product-details-right .product-name {
     font-size: 18px;
     color: #222;
-    text-transform: uppercase;
+ 
     margin-bottom: 10px;
 }
 
@@ -6731,9 +6731,11 @@ FOOTER
 
 .tab-details-product .box-tabs li a {
     color: #222;
-    text-transform: uppercase;
-}
 
+}
+.tab-details-product .box-tabs .active a{
+    font-weight: 600;
+}
 .body-beyond .tab-details-product .box-tabs li a:after {
     background: #FF5700 !important;
 }

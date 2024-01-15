@@ -3268,14 +3268,13 @@ DS .product-list .product-item {
     color: #FF5700;
     font-weight: 600;
     border: 1px solid #FF5700;
-    border-radius: 8px;
+    border-radius: 20px;
 }
 
 .product-info .add_to_cart_button:hover {
     background-color: #ff570030;
     color: #FF5700;
     border: 0.5px solid #FF5700;
-    border-radius: 8px;
 }
 
 .product-item.style3 .wishlist:hover,
@@ -10073,7 +10072,7 @@ li.info-pts {
     display: inline-block;
     padding: 5px 10px;
     border: 2px solid #FF5700;
-    border-radius: 3px;
+    border-radius: 20px;
     color: #FF5700;
     background-color: #fff;
 }

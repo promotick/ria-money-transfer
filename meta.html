@@ -148,15 +148,15 @@
         </div>
         <div class="row">
             <div class="col-md-5 margin-top-40">
-                <p>➤ Avance en este periodo: <b> <span class="monto-compra">&#8364;</span>
+                <p>➤ Avance en este periodo: <b> 
                         <span class="monto-acumulado-mensual monto-compra">0.00</span> </b></p>
                 <div class="division"></div>
-                <p>➤ Sólo te faltan: <b> <span class="monto-compra"> &#8364; </span>
+                <p>➤ Sólo te faltan: <b> 
                         <span class="monto-restante monto-compra">4166.67</span></b>
                 </p>
             </div>
             <div class="col-sm-7 text-center">
-                <p style="font-weight: 600">Tu meta del trimestre: <b> <span class="monto-compra"> &#8364; </span>
+                <p style="font-weight: 600">Tu meta del trimestre: <b> 
                         <span class="monto-meta monto-compra">4166.67</span> </b>
                 </p>
                 <div id="chartdiv"></div>
@@ -276,7 +276,7 @@
 
             /* Create bullet chart with specified color type for bac&#8364;round */
             function createBulletChart(parent, colorType) {
-                var colors = ["#19d228", "#b4dd1e", "#f4fb16", "#f6d32b", "#fb7116"];
+                var colors = ["#f69969", "#f7864c", "#fa722c", "#fb6416", "#FF5700"];
 
                 /* Create chart instance */
                 var chart = container.createChild(am4charts.XYChart);
@@ -284,7 +284,7 @@
 
                 /* Add data */
                 chart.data = [{
-                    "category": "Evaluation",
+                    "category": "Avance",
                     "value": 65,
                     "target": 78
                 }];

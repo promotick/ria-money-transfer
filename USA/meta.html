@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <script>try{if(localStorage.getItem("ria-usa-lang")==="en")document.documentElement.classList.add("i18n-pending")}catch(e){}</script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+
+    <title>Ria Money Transfer</title>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="css/owl.carousel.css">
+    <link rel="stylesheet" type="text/css" href="css/chosen.css">
+    <link rel="stylesheet" type="text/css" href="css/lightbox.min.css">
+    <link rel="stylesheet" type="text/css" href="css/pe-icon-7-stroke.css">
+    <link rel="stylesheet" type="text/css" href="css/font-linearicons.css">
+    <link rel="stylesheet" type="text/css" href="css/jquery.mCustomScrollbar.css">
+    <link rel="stylesheet" type="text/css" href="css/magnific-popup.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" type="text/css" href="css/usa-responsive.css">
+    <link rel="stylesheet" type="text/css" href="css/header.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="" href="images/favicon.ico">
+</head>
+
+<body class="home">
+            <a class="rh-skip" href="#main">Saltar al contenido</a>
+    <header class="rh" id="ria-header">
+        <div class="rh__bar">
+            <button class="rh__burger" type="button" aria-label="Abrir menú" aria-expanded="false" aria-controls="rh-drawer"><span></span><span></span><span></span></button>
+            <a class="rh__logo" href="index.html"><img src="images/logos/logo.png" alt="Ria Money Transfer"></a>
+            <nav class="rh__nav" aria-label="Principal">
+                <a href="index.html" data-nav="index.html">Inicio</a>
+                <a href="meta.html" data-nav="meta.html">Mi meta</a>
+                <a href="puntos.html" data-nav="puntos.html">Mis puntos</a>
+            </nav>
+            <form class="rh__search" action="busqueda.html" method="get" role="search">
+                <input type="search" name="q" placeholder="Buscar aquí" aria-label="Buscar aquí" autocomplete="off">
+                <button type="submit" aria-label="Buscar"><span class="pe-7s-search"></span></button>
+            </form>
+            <div class="rh__actions">
+                <a class="rh__points" href="puntos.html"><strong class="js-points">260,000</strong> <span>puntos</span></a>
+                <div class="rh__cart">
+                    <a class="rh__iconbtn" href="carrito.html" aria-label="Mi carrito"><span class="pe-7s-cart"></span><span class="rh__badge js-cart-count is-empty">0</span></a>
+                    <div class="rh__panel" id="rh-cart-panel"></div>
+                </div>
+                <div class="rh__user">
+                    <button class="rh__iconbtn rh__userbtn" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Mi cuenta"><span class="pe-7s-user"></span><span class="rh__name js-name">Eduardo</span></button>
+                    <div class="rh__menu">
+                        <a href="mi-perfil.html">Mi perfil</a>
+                        <a href="login.html">Cerrar sesión</a>
+                    </div>
+                </div>
+                <div class="rh__lang" data-lang-slot></div>
+            </div>
+        </div>
+        <div class="rh__overlay"></div>
+        <aside class="rh__drawer" id="rh-drawer" aria-label="Menú">
+            <div class="rh__drawer-head">
+                <p class="rh__hello js-hello">Bienvenido(a) Eduardo Naranjo</p>
+                <button class="rh__close" type="button" aria-label="Cerrar menú">&times;</button>
+            </div>
+            <a class="rh__balance" href="puntos.html"><small>Tus puntos</small><strong class="js-points">260,000</strong></a>
+            <nav class="rh__links" aria-label="Menú principal">
+                <a href="index.html" data-nav="index.html"><span class="pe-7s-gift"></span> Inicio</a>
+                <a href="meta.html" data-nav="meta.html"><span class="pe-7s-graph1"></span> Mi meta</a>
+                <a href="puntos.html" data-nav="puntos.html"><span class="pe-7s-wallet"></span> Mis puntos</a>
+                <a href="carrito.html" data-nav="carrito.html"><span class="pe-7s-cart"></span> Mi carrito</a>
+                <hr>
+                <a href="mi-perfil.html" data-nav="mi-perfil.html"><span class="pe-7s-user"></span> Mi perfil</a>
+                <a href="contacto.html" data-nav="contacto.html"><span class="pe-7s-headphones"></span> Contáctanos</a>
+                <a href="faq.html" data-nav="faq.html"><span class="pe-7s-help1"></span> Preguntas frecuentes</a>
+            </nav>
+            <div class="rh__drawer-foot">
+                <div data-lang-slot></div>
+                <a class="rh__logout" href="login.html">Cerrar sesión</a>
+            </div>
+        </aside>
+    </header>
+
+    <div class="container margin-bottom-75">
+        <div class="section-title style6 text-center margin-top-40">
+            <h3>Mi meta</h3>
+            <span class="sub-title"></span>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <p style="font-weight: 600">Eduardo, ¡Sigue acumulando!</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <h4 style="font-weight: 600"><i class="fa fa-calendar"></i> <span class="mes-actual">Octubre</span> <span class="anio-actual">2026</span></h4>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-5 margin-top-40">
+                <p>➤ Transacciones realizadas este mes: <b>
+                        <span class="monto-acumulado-mensual">18</span> </b></p>
+                <div class="division"></div>
+                <p>➤ Sólo te faltan: <b>
+                        <span class="monto-restante">7</span> transacciones</b>
+                </p>
+            </div>
+            <div class="col-sm-7 text-center">
+                <p style="font-weight: 600">Tu meta del mes: <b>
+                        <span class="monto-meta">25</span> transacciones</b>
+                </p>
+                <div id="chartdiv"></div>
+            </div>
+        </div>
+
+    </div>
+    <footer class="footer">
+        <div class="footer-top">
+            <div class="container">
+                <div class="row flex-flow">
+                    <div class="col-sm-12 col-md-4 footer-sidebar">
+                        <div class="widget contact-info">
+                            <h3 class="widget-title"><a href="contacto.html" class="color-whit">Contáctanos</a></h3>
+                            <div class="content">
+                                <p class="address">consultas@promotick.com</p>
+                                <p class="phone"></p>
+                                <!-- <ul>
+                                    <li><a href="contacto.html" class="color-whit">Enviar mensaje</a></li>
+                                </ul> -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-4 footer-sidebar">
+                        <div class="widget our-service">
+                            <h3 class="widget-title">Información</h3>
+                            <div class="content">
+                                <ul class="widget_social">
+                                    <li><a href="tyc.html">Términos y condiciones</a></li>
+                                    <li><a href="faq.html">Preguntas frecuentes</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-4 footer-sidebar">
+                        <div class="widget our-service">
+                            <div class="content">
+                                <ul>
+                                    <li class="logo-footerw"><img src="images/logos/logo-footer.png" alt="ria money transfer"></li>
+                                </ul>
+                                 <div class="dis-space margin-top-20" style="display: none">
+                                    <a class="img-link" href="https://www.facebook.com/RiaFinancialServices">
+                                        <img src="images/icons/facebook.png" alt="">
+                                    </a>
+                                    <a class="img-link" href="https://www.instagram.com/riamoneytransfer/?hl=es">
+                                        <img src="images/icons/insta.png" alt="">
+                                    </a>
+                                    <a class="img-link" href="https://www.linkedin.com/company/ria-financial/">
+                                        <img src="images/icons/linke.png" alt="">
+                                    </a>
+                                    <a class="img-link" href="https://twitter.com/RiaFinancial">
+                                        <img src="images/icons/twit.png" alt="">
+                                    </a>
+                                    <a class="img-link" href="https://app.riamoneytransfer.com/en-us">
+                                        <img src="images/icons/web.png" alt="">
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="container">
+                <p class="text-center">Ria Money Transfer 2026 | Todos los derechos reservados | Powered by <a href="https://www.promotick.com/" target="_blank"><img src="images/logos/promotick_gris.png" height="15" alt="promotick"></a></p>
+            </div>
+        </div>
+    </footer>
+    <a href="#" class="scroll_top" title="Scroll to Top" style="display: block;"><i class="fa fa-arrow-up"></i></a>
+    <script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/owl.carousel.min.js"></script>
+    <script type="text/javascript" src="js/chosen.jquery.min.js"></script>
+    <script type="text/javascript" src="js/Modernizr.js"></script>
+    <script type="text/javascript" src="js/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="js/lightbox.min.js"></script>
+    <script type="text/javascript" src="js/masonry.pkgd.min.js"></script>
+    <script type="text/javascript" src="js/imagesloaded.pkgd.min.js"></script>
+    <script type="text/javascript" src="js/isotope.pkgd.min.js"></script>
+    <script type="text/javascript" src="js/jquery.mCustomScrollbar.concat.min.js"></script>
+    <script type="text/javascript" src="js/jquery.parallax-1.1.3.js"></script>
+    <script type="text/javascript" src="js/masonry.js"></script>
+    <script type="text/javascript" src="js/functions.js"></script>
+    <!-- Resources chart-->
+    <script src="https://cdn.amcharts.com/lib/4/core.js"></script>
+    <script src="https://cdn.amcharts.com/lib/4/charts.js"></script>
+    <script src="https://cdn.amcharts.com/lib/4/themes/animated.js"></script>
+
+    <!-- Chart code -->
+    <script>
+        am4core.ready(function() {
+
+            // Themes begin
+            am4core.useTheme(am4themes_animated);
+            // Themes end
+
+
+
+            var container = am4core.create("chartdiv", am4core.Container);
+            container.width = am4core.percent(100);
+            container.height = am4core.percent(100);
+            container.layout = "vertical";
+
+            createBulletChart(container, "solid");
+
+            /* Create ranges */
+            function createRange(axis, from, to, color) {
+                var range = axis.axisRanges.create();
+                range.value = from;
+                range.endValue = to;
+                range.axisFill.fill = color;
+                range.axisFill.fillOpacity = 0.8;
+                range.label.disabled = true;
+                range.grid.disabled = true;
+            }
+
+            /* Create bullet chart with specified color type for bac&#8364;round */
+            function createBulletChart(parent, colorType) {
+                var colors = ["#f69969", "#f7864c", "#fa722c", "#fb6416", "#FF5700"];
+
+                /* Create chart instance */
+                var chart = container.createChild(am4charts.XYChart);
+                chart.paddingRight = 25;
+
+                /* Add data */
+                chart.data = [{
+                    "category": "Avance",
+                    "value": 72,
+                    "target": 100
+                }];
+
+                /* Create axes */
+                var categoryAxis = chart.yAxes.push(new am4charts.CategoryAxis());
+                categoryAxis.dataFields.category = "category";
+                categoryAxis.renderer.minGridDistance = 30;
+                categoryAxis.renderer.grid.template.disabled = true;
+
+                var valueAxis = chart.xAxes.push(new am4charts.ValueAxis());
+                valueAxis.renderer.minGridDistance = 30;
+                valueAxis.renderer.grid.template.disabled = true;
+                valueAxis.min = 0;
+                valueAxis.max = 100;
+                valueAxis.strictMinMax = true;
+                valueAxis.numberFormatter.numberFormat = "#'%'";
+                valueAxis.renderer.baseGrid.disabled = true;
+
+                /* 
+                    In order to create separate bac&#8364;round colors for each range of values, 
+                    you have to create multiple axisRange objects each with their own fill color 
+                */
+                if (colorType === "solid") {
+                    var start = 0,
+                        end = 20;
+                    for (var i = 0; i < 5; ++i) {
+                        createRange(valueAxis, start, end, am4core.color(colors[i]));
+                        start += 20;
+                        end += 20;
+                    }
+                }
+                /*
+                    In order to create a gradient bac&#8364;round, only one axisRange object is needed
+                    and a gradient object can be assigned to the axisRange's fill property. 
+                */
+                else if (colorType === "gradient") {
+                    var gradient = new am4core.LinearGradient();
+                    for (var i = 0; i < 5; ++i) {
+                        // add each color that makes up the gradient
+                        gradient.addColor(am4core.color(colors[i]));
+                    }
+                    createRange(valueAxis, 0, 100, gradient);
+                }
+
+                /* Create series */
+                var series = chart.series.push(new am4charts.ColumnSeries());
+                series.dataFields.valueX = "value";
+                series.dataFields.categoryY = "category";
+                series.columns.template.fill = am4core.color("#000");
+                series.columns.template.stroke = am4core.color("#fff");
+                series.columns.template.strokeWidth = 1;
+                series.columns.template.strokeOpacity = 0.5;
+                series.columns.template.height = am4core.percent(25);
+                series.tooltipText = "{value}"
+
+
+                var series2 = chart.series.push(new am4charts.StepLineSeries());
+                series2.dataFields.valueX = "target";
+                series2.dataFields.categoryY = "category";
+                series2.strokeWidth = 3;
+                series2.noRisers = true;
+                series2.startLocation = 0.15;
+                series2.endLocation = 0.85;
+                series2.tooltipText = "{valueX}"
+                series2.stroke = am4core.color("#000");
+
+                chart.cursor = new am4charts.XYCursor()
+                chart.cursor.lineX.disabled = true;
+                chart.cursor.lineY.disabled = true;
+
+                valueAxis.cursorTooltipEnabled = false;
+                chart.arrangeTooltips = false;
+            }
+
+        }); // end am4core.ready()
+
+
+        am4core.ready(function() {
+
+            // Themes begin
+            am4core.useTheme(am4themes_animated);
+            // Themes end
+
+
+
+            var container = am4core.create("chartdiv2", am4core.Container);
+            container.width = am4core.percent(100);
+            container.height = am4core.percent(100);
+            container.layout = "vertical";
+
+            createBulletChart(container, "solid");
+
+            /* Create ranges */
+            function createRange(axis, from, to, color) {
+                var range = axis.axisRanges.create();
+                range.value = from;
+                range.endValue = to;
+                range.axisFill.fill = color;
+                range.axisFill.fillOpacity = 0.8;
+                range.label.disabled = true;
+                range.grid.disabled = true;
+            }
+
+            /* Create bullet chart with specified color type for bac&#8364;round */
+            function createBulletChart(parent, colorType) {
+                var colors = ["#19d228", "#b4dd1e", "#f4fb16", "#f6d32b", "#fb7116"];
+
+                /* Create chart instance */
+                var chart = container.createChild(am4charts.XYChart);
+                chart.paddingRight = 25;
+
+                /* Add data */
+                chart.data = [{
+                    "category": "Evaluation",
+                    "value": 72,
+                    "target": 100
+                }];
+
+                /* Create axes */
+                var categoryAxis = chart.yAxes.push(new am4charts.CategoryAxis());
+                categoryAxis.dataFields.category = "category";
+                categoryAxis.renderer.minGridDistance = 30;
+                categoryAxis.renderer.grid.template.disabled = true;
+
+                var valueAxis = chart.xAxes.push(new am4charts.ValueAxis());
+                valueAxis.renderer.minGridDistance = 30;
+                valueAxis.renderer.grid.template.disabled = true;
+                valueAxis.min = 0;
+                valueAxis.max = 100;
+                valueAxis.strictMinMax = true;
+                valueAxis.numberFormatter.numberFormat = "#'%'";
+                valueAxis.renderer.baseGrid.disabled = true;
+
+                /* 
+                    In order to create separate bac&#8364;round colors for each range of values, 
+                    you have to create multiple axisRange objects each with their own fill color 
+                */
+                if (colorType === "solid") {
+                    var start = 0,
+                        end = 20;
+                    for (var i = 0; i < 5; ++i) {
+                        createRange(valueAxis, start, end, am4core.color(colors[i]));
+                        start += 20;
+                        end += 20;
+                    }
+                }
+                /*
+                    In order to create a gradient bac&#8364;round, only one axisRange object is needed
+                    and a gradient object can be assigned to the axisRange's fill property. 
+                */
+                else if (colorType === "gradient") {
+                    var gradient = new am4core.LinearGradient();
+                    for (var i = 0; i < 5; ++i) {
+                        // add each color that makes up the gradient
+                        gradient.addColor(am4core.color(colors[i]));
+                    }
+                    createRange(valueAxis, 0, 100, gradient);
+                }
+
+                /* Create series */
+                var series = chart.series.push(new am4charts.ColumnSeries());
+                series.dataFields.valueX = "value";
+                series.dataFields.categoryY = "category";
+                series.columns.template.fill = am4core.color("#000");
+                series.columns.template.stroke = am4core.color("#fff");
+                series.columns.template.strokeWidth = 1;
+                series.columns.template.strokeOpacity = 0.5;
+                series.columns.template.height = am4core.percent(25);
+                series.tooltipText = "{value}"
+
+
+                var series2 = chart.series.push(new am4charts.StepLineSeries());
+                series2.dataFields.valueX = "target";
+                series2.dataFields.categoryY = "category";
+                series2.strokeWidth = 3;
+                series2.noRisers = true;
+                series2.startLocation = 0.15;
+                series2.endLocation = 0.85;
+                series2.tooltipText = "{valueX}"
+                series2.stroke = am4core.color("#000");
+
+                chart.cursor = new am4charts.XYCursor()
+                chart.cursor.lineX.disabled = true;
+                chart.cursor.lineY.disabled = true;
+
+                valueAxis.cursorTooltipEnabled = false;
+                chart.arrangeTooltips = false;
+            }
+
+        }); // end am4core.ready()
+
+    </script>
+    <script type="text/javascript" src="js/i18n.js"></script>
+    <script type="text/javascript" src="js/proto.js"></script>
+</body>
+
+</html>

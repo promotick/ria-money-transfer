@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+    <script>try{if(localStorage.getItem("ria-usa-lang")==="en")document.documentElement.classList.add("i18n-pending")}catch(e){}</script>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta charset="UTF-8">
+    
+        <title>Mi carrito - Ria Money Transfer USA</title>
+        <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
+        <link rel="stylesheet" type="text/css" href="css/owl.carousel.css">
+        <link rel="stylesheet" type="text/css" href="css/chosen.css">
+        <link rel="stylesheet" type="text/css" href="css/lightbox.min.css">
+        <link rel="stylesheet" type="text/css" href="css/pe-icon-7-stroke.css">
+        <link rel="stylesheet" type="text/css" href="css/font-linearicons.css">
+        <link rel="stylesheet" type="text/css" href="css/jquery.mCustomScrollbar.css">
+        <link rel="stylesheet" type="text/css" href="css/magnific-popup.css">
+        <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" type="text/css" href="css/usa-responsive.css">
+    <link rel="stylesheet" type="text/css" href="css/header.css">
+    
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+        <link rel="icon" type="" href="images/favicon.ico">
+    </head>
+
+<body class="home">
+            <a class="rh-skip" href="#main">Saltar al contenido</a>
+    <header class="rh" id="ria-header">
+        <div class="rh__bar">
+            <button class="rh__burger" type="button" aria-label="Abrir menú" aria-expanded="false" aria-controls="rh-drawer"><span></span><span></span><span></span></button>
+            <a class="rh__logo" href="index.html"><img src="images/logos/logo.png" alt="Ria Money Transfer"></a>
+            <nav class="rh__nav" aria-label="Principal">
+                <a href="index.html" data-nav="index.html">Inicio</a>
+                <a href="meta.html" data-nav="meta.html">Mi meta</a>
+                <a href="puntos.html" data-nav="puntos.html">Mis puntos</a>
+            </nav>
+            <form class="rh__search" action="busqueda.html" method="get" role="search">
+                <input type="search" name="q" placeholder="Buscar aquí" aria-label="Buscar aquí" autocomplete="off">
+                <button type="submit" aria-label="Buscar"><span class="pe-7s-search"></span></button>
+            </form>
+            <div class="rh__actions">
+                <a class="rh__points" href="puntos.html"><strong class="js-points">260,000</strong> <span>puntos</span></a>
+                <div class="rh__cart">
+                    <a class="rh__iconbtn" href="carrito.html" aria-label="Mi carrito"><span class="pe-7s-cart"></span><span class="rh__badge js-cart-count is-empty">0</span></a>
+                    <div class="rh__panel" id="rh-cart-panel"></div>
+                </div>
+                <div class="rh__user">
+                    <button class="rh__iconbtn rh__userbtn" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Mi cuenta"><span class="pe-7s-user"></span><span class="rh__name js-name">Eduardo</span></button>
+                    <div class="rh__menu">
+                        <a href="mi-perfil.html">Mi perfil</a>
+                        <a href="login.html">Cerrar sesión</a>
+                    </div>
+                </div>
+                <div class="rh__lang" data-lang-slot></div>
+            </div>
+        </div>
+        <div class="rh__overlay"></div>
+        <aside class="rh__drawer" id="rh-drawer" aria-label="Menú">
+            <div class="rh__drawer-head">
+                <p class="rh__hello js-hello">Bienvenido(a) Eduardo Naranjo</p>
+                <button class="rh__close" type="button" aria-label="Cerrar menú">&times;</button>
+            </div>
+            <a class="rh__balance" href="puntos.html"><small>Tus puntos</small><strong class="js-points">260,000</strong></a>
+            <nav class="rh__links" aria-label="Menú principal">
+                <a href="index.html" data-nav="index.html"><span class="pe-7s-gift"></span> Inicio</a>
+                <a href="meta.html" data-nav="meta.html"><span class="pe-7s-graph1"></span> Mi meta</a>
+                <a href="puntos.html" data-nav="puntos.html"><span class="pe-7s-wallet"></span> Mis puntos</a>
+                <a href="carrito.html" data-nav="carrito.html"><span class="pe-7s-cart"></span> Mi carrito</a>
+                <hr>
+                <a href="mi-perfil.html" data-nav="mi-perfil.html"><span class="pe-7s-user"></span> Mi perfil</a>
+                <a href="contacto.html" data-nav="contacto.html"><span class="pe-7s-headphones"></span> Contáctanos</a>
+                <a href="faq.html" data-nav="faq.html"><span class="pe-7s-help1"></span> Preguntas frecuentes</a>
+            </nav>
+            <div class="rh__drawer-foot">
+                <div data-lang-slot></div>
+                <a class="rh__logout" href="login.html">Cerrar sesión</a>
+            </div>
+        </aside>
+    </header>
+
+    <div class="container margin-top-40 margin-bottom-50">
+        <div class="section-title style6 text-center">
+            <h3>Mis premios (0 productos)</h3>
+            <span class="sub-title"></span>
+        </div>
+        <div class="main-content">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="table-responsive">
+                        <table class="shop_table cart">
+                            <thead>
+                                <tr>
+                                    <th colspan="2" class="">Producto</th>
+                                    <th class="">Puntos</th>
+                                    <th class="">Valor (USD)</th>
+                                    <th class="">Cantidad</th>
+                                    <th class="">Subtotal</th>
+                                    <th class="">Eliminar</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<footer class="footer">
+        <div class="footer-top">
+            <div class="container">
+                <div class="row flex-flow">
+                    <div class="col-sm-12 col-md-4 footer-sidebar">
+                        <div class="widget contact-info">
+                            <h3 class="widget-title"><a href="contacto.html" class="color-whit">Contáctanos</a></h3>
+                            <div class="content">
+                                <p class="address">consultas@promotick.com</p>
+                                <p class="phone"></p>
+                                <!-- <ul>
+                                    <li><a href="contacto.html" class="color-whit">Enviar mensaje</a></li>
+                                </ul> -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-4 footer-sidebar">
+                        <div class="widget our-service">
+                            <h3 class="widget-title">Información</h3>
+                            <div class="content">
+                                <ul class="widget_social">
+                                    <li><a href="tyc.html">Términos y condiciones</a></li>
+                                    <li><a href="faq.html">Preguntas frecuentes</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-4 footer-sidebar">
+                        <div class="widget our-service">
+                            <div class="content">
+                                <ul>
+                                    <li class="logo-footerw"><img src="images/logos/logo-footer.png" alt="ria money transfer"></li>
+                                </ul>
+                                 <div class="dis-space margin-top-20" style="display: none">
+                                    <a class="img-link" href="https://www.facebook.com/RiaFinancialServices">
+                                        <img src="images/icons/facebook.png" alt="">
+                                    </a>
+                                    <a class="img-link" href="https://www.instagram.com/riamoneytransfer/?hl=es">
+                                        <img src="images/icons/insta.png" alt="">
+                                    </a>
+                                    <a class="img-link" href="https://www.linkedin.com/company/ria-financial/">
+                                        <img src="images/icons/linke.png" alt="">
+                                    </a>
+                                    <a class="img-link" href="https://twitter.com/RiaFinancial">
+                                        <img src="images/icons/twit.png" alt="">
+                                    </a>
+                                    <a class="img-link" href="https://app.riamoneytransfer.com/en-us">
+                                        <img src="images/icons/web.png" alt="">
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="container">
+                <p class="text-center">Ria Money Transfer 2026 | Todos los derechos reservados | Powered by <a href="https://www.promotick.com/" target="_blank"><img src="images/logos/promotick_gris.png" height="15" alt="promotick"></a></p>
+            </div>
+        </div>
+    </footer>
+    <a href="#" class="scroll_top" title="Scroll to Top" style="display: block;"><i class="fa fa-arrow-up"></i></a>
+    <script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/owl.carousel.min.js"></script>
+    <script type="text/javascript" src="js/chosen.jquery.min.js"></script>
+    <script type="text/javascript" src="js/Modernizr.js"></script>
+    <script type="text/javascript" src="js/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="js/lightbox.min.js"></script>
+    <script type="text/javascript" src="js/masonry.pkgd.min.js"></script>
+    <script type="text/javascript" src="js/imagesloaded.pkgd.min.js"></script>
+    <script type="text/javascript" src="js/isotope.pkgd.min.js"></script>
+    <script type="text/javascript" src="js/jquery.mCustomScrollbar.concat.min.js"></script>
+    <script type="text/javascript" src="js/jquery.parallax-1.1.3.js"></script>
+    <script type="text/javascript" src="js/masonry.js"></script>
+    <script type="text/javascript" src="js/functions.js"></script>
+    <script type="text/javascript" src="js/i18n.js"></script>
+    <script type="text/javascript" src="js/proto.js"></script>
+</body>
+
+</html>

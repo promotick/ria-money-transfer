@@ -1,0 +1,256 @@
+/*
+ * Ria USA - responsive fixes layered on top of style.css.
+ * Keep this file last in the <head> so it can override the base theme.
+ */
+
+/* A .container nested inside another .container double-counted the width
+   (visible as a 6px horizontal overflow at 768px). */
+.container .container {
+    width: auto;
+    max-width: 100%;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+/* detail-canje: a .row used directly as a tab wrapper had no gutter. */
+.row > #tab-3.tab-panel {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+#chartdiv {
+    width: 100%;
+    min-height: 160px;
+}
+
+@media (max-width: 767px) {
+    /* Points statement tables: 30px cell padding made 3 columns overflow. */
+    table.group-product > tbody > tr > th,
+    table.group-product > tbody > tr > td {
+        padding: 8px;
+        font-size: 13px;
+        line-height: 18px;
+    }
+
+    .box-tabs.nav-tab li a {
+        font-size: 14px;
+        padding-left: 8px;
+        padding-right: 8px;
+    }
+
+    #chartdiv {
+        height: 190px;
+    }
+
+    /* Cart: turn the 7-column table into one card per item. */
+    .shop_table.cart,
+    .shop_table.cart tbody {
+        display: block;
+        width: 100%;
+    }
+
+    .shop_table.cart thead {
+        display: none;
+    }
+
+    .shop_table.cart tr.cart-item-row {
+        display: grid;
+        grid-template-columns: 72px 1fr auto;
+        grid-template-areas:
+            "thumb name remove"
+            "thumb qty  subtotal";
+        gap: 6px 12px;
+        align-items: center;
+        padding: 16px 0;
+        border-top: 1px solid #ddd;
+    }
+
+    .shop_table.cart tr.cart-item-row td {
+        display: block;
+        border: 0;
+        padding: 0;
+    }
+
+    .shop_table.cart tr.cart-item-row td:nth-child(1) { grid-area: thumb; width: auto; }
+    .shop_table.cart tr.cart-item-row td:nth-child(2) { grid-area: name; }
+    .shop_table.cart tr.cart-item-row td:nth-child(3),
+    .shop_table.cart tr.cart-item-row td:nth-child(4) { display: none; }
+    .shop_table.cart tr.cart-item-row td:nth-child(5) { grid-area: qty; }
+    .shop_table.cart tr.cart-item-row td:nth-child(6) { grid-area: subtotal; text-align: right; font-weight: 600; }
+    .shop_table.cart tr.cart-item-row td:nth-child(7) { grid-area: remove; text-align: right; }
+
+    .shop_table.cart .product-thumbnail img {
+        width: 72px;
+    }
+
+    .shop_table.cart tr.cart-item-row .quantity {
+        white-space: nowrap;
+    }
+
+    .shop_table.cart tr.cart-total-row {
+        display: block;
+        padding: 16px 0 0;
+        border-top: 1px solid #ddd;
+    }
+
+    .shop_table.cart tr.cart-total-row td {
+        display: block;
+        border: 0;
+        padding: 0 0 12px;
+    }
+
+    .shop_table.cart tr.cart-total-row td:first-child h6 {
+        text-align: left !important;
+    }
+
+    .shop_table.cart tr.cart-total-row .button {
+        display: block;
+        width: 100%;
+        text-align: center;
+    }
+}
+
+/* Typography: style.css leaves some components on Roboto / MontserratLight,
+   neither of which is loaded, so they fall back to a serif. Keep one family. */
+.breadcrumbs,
+.breadcrumbs a,
+.breadcrumbs span,
+.price,
+.topbar-menu,
+h4.title {
+    font-family: 'Noto Sans', sans-serif;
+}
+/* One family for all text; icon fonts (pe-7s-*, fa, icon-*, flaticon, lnr) are excluded. */
+body :not(i):not([class*="icon"]):not([class*="pe-7s"]):not([class^="fa"]):not([class*=" fa"]):not([class*="lnr"]) {
+    font-family: 'Noto Sans', sans-serif;
+}
+/* Custom checkbox (checkout "Usar mis puntos"): input + label > span markup.
+   Bootstrap-style checkboxes (input inside the label) are left untouched. */
+.checkbox > input[type="checkbox"] + label {
+    position: relative;
+    display: inline-block;
+    width: 22px;
+    height: 22px;
+    min-height: 0;
+    margin: 0 0 0 12px;
+    padding: 0;
+    vertical-align: middle;
+    cursor: pointer;
+}
+
+.checkbox > input[type="checkbox"] {
+    position: absolute;
+    opacity: 0;
+    width: 22px;
+    height: 22px;
+    margin: 0 0 0 12px;
+}
+
+.checkbox > input[type="checkbox"] + label span {
+    display: block;
+    width: 22px;
+    height: 22px;
+    border: 2px solid #FF5700;
+    border-radius: 4px;
+    background: #fff;
+    transition: background-color .15s ease;
+}
+
+.checkbox > input[type="checkbox"]:checked + label span {
+    background: #FF5700 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M3 8.5l3.2 3.2L13 4.8' fill='none' stroke='%23fff' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 14px no-repeat;
+}
+
+.checkbox > input[type="checkbox"]:focus-visible + label span {
+    outline: 2px solid #222;
+    outline-offset: 2px;
+}
+/* Checkbox placed before its text (left side): swap the left gutter for a right one. */
+.checkbox.checkbox-left > input[type="checkbox"] + label,
+.checkbox.checkbox-left > input[type="checkbox"] {
+    margin: 0 12px 0 0;
+}
+/* ---- Prototype components (js/proto.js) ---- */
+.ria-toast {
+    position: fixed;
+    left: 50%;
+    bottom: 30px;
+    transform: translate(-50%, 20px);
+    max-width: calc(100vw - 32px);
+    padding: 12px 22px;
+    border-radius: 6px;
+    background: #222;
+    color: #fff;
+    font-size: 14px;
+    opacity: 0;
+    transition: opacity .25s ease, transform .25s ease;
+    z-index: 3000;
+    pointer-events: none;
+}
+.ria-toast.show { opacity: 1; transform: translate(-50%, 0); }
+.ria-toast.warn { background: #b3261e; }
+
+.ria-note {
+    margin: 12px 0 0;
+    padding: 10px 14px;
+    border-radius: 6px;
+    background: #fff4ee;
+    border: 1px solid #ffd2b8;
+    color: #7a3200;
+    font-size: 13px;
+}
+.ria-note.warn { background: #fdecea; border-color: #f5c2bd; color: #8a1c14; }
+
+.ria-denoms { display: flex; gap: 10px; flex-wrap: wrap; }
+.ria-denom { margin: 0; cursor: pointer; }
+.ria-denom input { position: absolute; opacity: 0; }
+.ria-denom span {
+    display: block;
+    min-width: 92px;
+    padding: 8px 12px;
+    border: 2px solid #ddd;
+    border-radius: 6px;
+    text-align: center;
+    font-weight: 600;
+    line-height: 1.2;
+}
+.ria-denom small { display: block; font-weight: 400; font-size: 11px; color: #777; }
+.ria-denom input:checked + span { border-color: #FF5700; background: #fff4ee; }
+.ria-denom input:focus-visible + span { outline: 2px solid #222; outline-offset: 2px; }
+
+.mini-cart .show-shopping-cart .list-product .remove-item { cursor: pointer; }
+/* ---- Catalog card: "from" line and button ---- */
+/* .price-normal in style.css is a struck-through old price; "Desde X Puntos" is not one. */
+.product-info .price-from {
+    margin: 4px 0 14px;
+    color: #6b6b6b;
+    font-size: 13px;
+    text-decoration: none;
+}
+
+.product-info .add_to_cart_button {
+    display: block;
+    width: 100%;
+    padding: 10px 12px;
+    font-size: 14px;
+    line-height: 1.3;
+    text-align: center;
+    white-space: nowrap;
+}
+
+@media (max-width: 360px) {
+    .product-info .add_to_cart_button { font-size: 13px; padding-left: 8px; padding-right: 8px; }
+}
+/* long event names in the points statement must wrap on very small phones */
+@media (max-width: 767px) {
+    table.group-product > tbody > tr > th,
+    table.group-product > tbody > tr > td { overflow-wrap: anywhere; }
+}
+
+/* ---- No flash of Spanish when the saved language is English ----
+   A tiny inline script in <head> sets .i18n-pending; js/i18n.js removes it once the page is translated.
+   The animation is a safety net: the page is revealed after 1.5s even if scripts fail. */
+html.i18n-pending body {
+    visibility: hidden;
+    animation: ria-reveal 0s linear 1.5s forwards;
+}
+@keyframes ria-reveal { to { visibility: visible; } }

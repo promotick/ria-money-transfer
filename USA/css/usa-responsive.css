@@ -254,3 +254,10 @@ html.i18n-pending body {
     animation: ria-reveal 0s linear 1.5s forwards;
 }
 @keyframes ria-reveal { to { visibility: visible; } }
+/* ---- Checkout conditions (above "Continuar canje") ---- */
+.ria-terms {
+    margin: 16px 0;
+    color: #6b7280;
+    font-size: 12.5px;
+    line-height: 1.5;
+}

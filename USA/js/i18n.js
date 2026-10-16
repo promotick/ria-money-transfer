@@ -120,6 +120,13 @@
         'Eventualmente, los productos, modelos y puntajes de los premios pueden sufrir variaciones. Además, el catálogo de productos podrá renovarse o modificarse a solicitud de Mego Networks.': 'Occasionally, rewards, models and point values may vary. The catalog may also be renewed or modified at the request of Mego Networks.',
         'RIA se reserva el derecho de cancelar la participación en el programa a cualquier participante o titular que infrinja las reglas establecidas en el presente reglamento y/o cualquier otra regla que a criterio de RIA descalifique al participante y/o titular.': 'RIA reserves the right to cancel the participation of any participant or holder who breaches the rules set out in these regulations and/or any other rule that, in RIA\'s judgment, disqualifies the participant and/or holder.',
         'Tu carrito está vacío': 'Your cart is empty',
+        'Recibirás tus Gift Cards digitales en el correo que elijas en un plazo de 3 a 5 días hábiles.': 'You will receive your digital Gift Cards at your chosen email address within 3 to 5 business days.',
+        'Recibirás tus Gift Cards digitales en el correo indicado en un plazo de 3 a 5 días hábiles.': 'You will receive your digital Gift Cards at the email address provided within 3 to 5 business days.',
+        'Las Gift Cards digitales se envían por correo electrónico en un plazo de 3 a 5 días hábiles después de realizar el canje. Revisa tu carpeta de spam si no la encuentras.': 'Digital Gift Cards are sent by email within 3 to 5 business days after redeeming. Check your spam folder if you cannot find it.',
+        'Las Gift Cards son digitales y se envían al correo electrónico que indiques en un plazo de 3 a 5 días hábiles después de realizar tu canje. Si no la encuentras, revisa tu carpeta de spam.': 'Gift Cards are digital and are sent to the email you provide within 3 to 5 business days after you redeem. If you cannot find it, check your spam folder.',
+        'Las Gift Cards se envían por correo electrónico en un plazo de 3 a 5 días hábiles después de realizado el canje.': 'Gift Cards are sent by email within 3 to 5 business days after the redemption.',
+        'Los códigos de Gift Card no tienen valor en efectivo y no son reembolsables. El titular es responsable del uso y custodia de su código. RIA Club no se responsabiliza por códigos perdidos, robados o mal utilizados una vez entregados. Algunas Gift Cards pueden tener fecha de vencimiento - consulta los términos de cada marca. Los productos y servicios canjeables están sujetos a los términos y condiciones del emisor.':
+            'Gift card codes have no cash value and are non-refundable. The cardholder is responsible for the safekeeping and proper use of their gift card code. RIA Club is not responsible for lost, stolen, or misused codes once delivered. Some gift cards may have an expiration date - please check the terms of each brand, as expiration policies vary by retailer. The products and services redeemable with each gift card are subject to the terms and conditions of the issuing retailer.',
         'Saltar al contenido': 'Skip to content',
         'Idioma': 'Language',
         'Tus puntos': 'Your points',
@@ -165,7 +172,6 @@
         'Mensaje enviado. Te responderemos pronto.': 'Message sent. We will reply soon.',
         'o': 'or',
         'Tu Gift Card llegará a tu correo en': 'Your Gift Card will arrive in your email in',
-        'pocos minutos': 'a few minutes',
         'Valor (USD)': 'Value (USD)',
         'Gift Card digital': 'Digital Gift Card',
         'Desde': 'From',
@@ -181,8 +187,6 @@
             'Amazon digital Gift Card valid in the United States. You will receive the code at the email you provide when redeeming. It does not expire and is non-refundable.',
         'Lea detenidamente los términos y condiciones del Programa, que están en la página web.':
             'Please read the Program terms and conditions carefully; they are available on the website.',
-        'Las Gift Cards digitales se envían por correo electrónico, normalmente en pocos minutos después de realizar el canje. Revisa tu carpeta de spam si no la encuentras.':
-            'Digital Gift Cards are sent by email, usually within a few minutes after redeeming. Check your spam folder if you cannot find it.',
         'En caso de tener alguna duda contáctenos al correo consultas@promotick.com':
             'If you have any questions, contact us at consultas@promotick.com',
         'El articulo fue agregado a tus favoritos': 'The item was added to your favorites',
@@ -200,16 +204,12 @@
         'Mis premios (2 productos)': 'My rewards (2 items)',
         'Esta a solo 2 pasos de terminar su canje': 'You are only 2 steps away from completing your redemption',
         '¿A qué correo enviaremos tus Gift Cards?': 'Which email should we send your Gift Cards to?',
-        'Recibirás tus Gift Cards digitales en el correo que elijas, normalmente en pocos minutos.':
-            'You will receive your digital Gift Cards at the email you choose, usually within a few minutes.',
         'Mi correo': 'My email',
         'Regalo para María': 'Gift for María',
         '+ Agregar otro correo': '+ Add another email',
         'Agregar correo de envío': 'Add delivery email',
         'Nombre del destinatario': 'Recipient name',
         'Correo electrónico': 'Email',
-        'Mensaje (opcional)': 'Message (optional)',
-        'Mensaje para el destinatario (opcional)': 'Message for the recipient (optional)',
         'Guardar correo': 'Save email',
         'Información personal': 'Personal information',
         'Resumen de tu canje (2 productos)': 'Your redemption summary (2 items)',
@@ -233,11 +233,9 @@
         'Detalle de canje:': 'Redemption details:',
         'Detalle canje': 'Redemption details',
         'Detalle': 'Details',
-        'Indicaciones particulares:': 'Special instructions:',
         'Para revisar el detalle de tu canje puedes visitar la sección': 'To review your redemption details, visit the section',
         '"Puntos canjeados" en el módulo "Mis puntos"': '"Redeemed points" in the "My points" module',
         'El tiempo de envio de tu canje es de': 'The delivery time of your redemption is',
-        'XX días hábiles:': 'a few minutes:',
 
         // Goal (monthly, by transactions)
         'Eduardo, ¡Sigue acumulando!': 'Eduardo, keep going!',
@@ -304,8 +302,6 @@
         'Enviar respuestas': 'Send answers',
         'Encuesta': 'Survey',
         '¿Cuánto tarda en llegar mi Gift Card?': 'How long does my Gift Card take to arrive?',
-        'Las Gift Cards son digitales y se envían al correo electrónico que indiques, normalmente en pocos minutos después de realizar tu canje. Si no la encuentras, revisa tu carpeta de spam.':
-            'Gift Cards are digital and are sent to the email you provide, usually within a few minutes after you redeem. If you cannot find it, check your spam folder.',
         '¿Cómo canjeo los Premios?': 'How do I redeem rewards?',
         '¿Mis puntos caducan? ¿Hasta cuándo tengo plazo para realizar mis canjes?': 'Do my points expire? How long do I have to redeem?',
         '¿Puedo canjear mis puntos en cualquier momento?': 'Can I redeem my points at any time?',
@@ -316,8 +312,6 @@
             'All rewards are digital Gift Cards. Once the code has been sent to the indicated email, no changes or returns are accepted.',
         'El participante es responsable de ingresar correctamente el correo electrónico de envío. No nos responsabilizamos por códigos enviados a una dirección errónea.':
             'The participant is responsible for entering the delivery email correctly. We are not responsible for codes sent to an incorrect address.',
-        'Las Gift Cards se envían por correo electrónico, normalmente en pocos minutos después de realizado el canje.':
-            'Gift Cards are sent by email, usually within a few minutes after the redemption.',
         'Las imágenes y colores de las Gift Cards son referenciales.': 'Gift Card images and colors are for reference only.',
         'Cada Gift Card se rige bajo las reglas y condiciones de cada establecimiento. Los términos y condiciones podrán visualizarse al momento de recibir la Gift Card. Cada establecimiento tiene sus propios términos y condiciones.':
             'Each Gift Card is governed by the rules and conditions of each merchant. The terms and conditions can be viewed when you receive the Gift Card. Each merchant has its own terms and conditions.',

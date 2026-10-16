@@ -58,7 +58,6 @@
             cart: [],
             emails: [{ id: 'e1', label: 'Mi correo', email: email }, { id: 'e2', label: 'Regalo para María', email: 'maria.naranjo@correo.com' }],
             emailSel: 'e1',
-            msg: '',
             usePoints: true,
             earned: [
                 ['2026-04-05', 'PUNTOS TRANSFERENCIAS ENERO-MARZO', 60000],
@@ -68,7 +67,7 @@
                 ['2026-08-05', 'PUNTOS TRANSFERENCIAS JULIO', 40000],
                 ['2026-09-05', 'PUNTOS TRANSFERENCIAS AGOSTO', 32000]
             ],
-            orders: [{ no: '0123456', date: '2026-10-04', email: email, label: 'Mi correo', msg: '', pay: 'points',
+            orders: [{ no: '0123456', date: '2026-10-04', email: email, label: 'Mi correo', pay: 'points',
                 items: [{ id: 'amazon', denom: 25, qty: 1 }, { id: 'walmart', denom: 50, qty: 1 }] }],
             seq: 123457,
             lastOrder: ''
@@ -466,8 +465,6 @@
         totalEl.setAttribute('data-usd', t.usd);
         updateCheckoutTotal();
 
-        var ta = $('.product-details-right textarea');
-        if (ta) { ta.value = S.msg || ''; ta.id = 'order-msg'; }
         renderEmails();
         refresh();
     }
@@ -530,13 +527,12 @@
         var no = String(S.seq++);
         while (no.length < 7) no = '0' + no;
         S.orders.unshift({
-            no: no, date: todayISO(), email: e.email, label: e.label, msg: S.msg || '',
+            no: no, date: todayISO(), email: e.email, label: e.label,
             pay: (S.usePoints && balance() >= t.pts) ? 'points' : 'usd',
             items: S.cart.map(function (l) { return { id: l.id, denom: l.denom, qty: l.qty }; }),
             survey: survey || null
         });
         S.cart = [];
-        S.msg = '';
         S.lastOrder = no;
         save();
         location.href = 'checkout-ok.html?o=' + no;
@@ -661,8 +657,7 @@
         }
         w.innerHTML =
             '<div class="row">' + cell('pe-7s-news-paper', 'Nº pedido:', '<p>' + o.no + '</p>') + cell('pe-7s-date', 'Fecha:', '<p>' + fmtDate(o.date) + '</p>') + '</div>' +
-            '<div class="row">' + cell('pe-7s-mail', 'Correo de envío:', '<p>' + esc(o.email) + '</p>') +
-            cell('pe-7s-comment', 'Indicaciones particulares:', '<p>' + (o.msg ? esc(o.msg) : '-') + '</p>') + '</div>' +
+            '<div class="row">' + cell('pe-7s-mail', 'Correo de envío:', '<p>' + esc(o.email) + '</p>') + '</div>' +
             '<div class="row">' + cell('pe-7s-cart', 'Detalle de canje:', itemsList(o)) +
             '<div class="col-md-6"><h2 class="widget-title" style="font-weight:600"><span class="icon pe-7s-credit"></span> Total:</h2>' +
             '<div class="col-md-12" style="background:#fb5701;padding-top:10px;padding-bottom:10px;border-radius:5px"><span class="price" style="font-weight:600;color:#fff">' + totalLabel(o) + '</span></div></div></div>';
@@ -717,7 +712,7 @@
     function initEmailForm() {
         if (page() !== 'edit-direc.html') return;
         var root = $('.tab-container') || document;   // keep clear of the header search box / mini-cart
-        var text = $('input[type="text"]', root), mail = $('input[type="email"]', root), msg = $('textarea', root);
+        var text = $('input[type="text"]', root), mail = $('input[type="email"]', root);
         var btn = $('a.button-add-cart', root), h4 = $('h4', root);
         var id = param('id'), e = id ? emailById(id) : null;
         if (e) { text.value = e.label; mail.value = e.email; if (h4) h4.innerHTML = '<span class="icon pe-7s-mail" style="font-size:25px"></span> Editar correo de envío:'; }
@@ -739,7 +734,6 @@
             save();
             location.href = 'mi-perfil.html#tab-2';
         });
-        void msg;
     }
 
     function confirmDeleteEmail(id) {
@@ -826,7 +820,6 @@
             if (err) { e.preventDefault(); e.stopImmediatePropagation(); toast(err, 'warn'); return; }
             e.preventDefault();
             e.stopImmediatePropagation();
-            var ta = $('#order-msg'); S.msg = ta ? ta.value.trim() : ''; save();
             if (window.jQuery) window.jQuery('#encuesta').modal('show');
             return;
         }

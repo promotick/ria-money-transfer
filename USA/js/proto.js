@@ -114,11 +114,10 @@
         m.setAttribute('tabindex', '-1');
         m.setAttribute('role', 'dialog');
         m.innerHTML =
-            '<div class="modal-dialog' + (wide ? ' modal-lg' : '') + '" role="document" style="z-index:1041;margin-top:100px"><div class="modal-content">' +
-            '<div class="modal-header" style="padding:20px 40px"><h4 style="margin-bottom:0;font-weight:600;display:inline-block">' + title + '</h4>' +
-            '<button type="button" class="close" data-dismiss="modal" aria-label="Close" style="margin-top:3px">x</button></div>' +
-            '<div class="modal-body margin-bottom-20" style="padding:20px 40px">' + body + '</div></div></div>';
-        document.body.appendChild(m);
+            '<div class="modal-dialog ria-md' + (wide ? ' modal-lg' : '') + '" role="document"><div class="modal-content">' +
+            '<div class="modal-header"><h4 class="modal-title">' + title + '</h4>' +
+            '<button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">&times;</button></div>' +
+            '<div class="modal-body">' + body + '</div></div></div>';        document.body.appendChild(m);
         refresh();
         if (window.jQuery) window.jQuery(m).modal('show');
         return m;
@@ -519,18 +518,16 @@
 
     function openAdded(id, denom, qty) {
         var b = brand(id), t = cartTotals();
-        var body = '<div class="widget widget_recent_product row"><div class="col-md-12"><ul class="product-categories"><li>' +
-            '<div class="product-thumb" style="position:relative"><span class="basket">' + qty + '</span><a><img alt="" src="' + img(b.id, denom) + '"></a></div>' +
-            '<div class="product-info"><p class="text-uppercase marca" style="margin:0">' + esc(b.name) + '</p>' +
-            '<h3 class="product-name" style="margin-bottom:5px"><a href="detail-prod.html?b=' + b.id + '&v=' + denom + '">' + esc(b.name) + ' Digital Gift Card $' + denom + '</a></h3>' +
-            '<span class="price" style="font-weight:600">' + qty + ' x ' + fmt(denom * RATE) + ' Puntos</span></div></li></ul></div></div>' +
-            '<div class="row margin-bottom-20"><div class="col-md-6"><h5 style="font-weight:600">Sub-total (' + t.units + ' ' + plural(t.units) + '):</h5></div>' +
-            '<div class="col-md-6"><h5 style="font-weight:600">' + fmt(t.pts) + ' Puntos</h5></div></div>' +
-            '<div class="row text-center"><div class="col-md-12"><a class="button style-10" href="carrito.html">Ver mi carrito de compras</a></div></div><br>' +
-            '<div class="row text-center"><div class="col-md-12">o <a href="#" data-dismiss="modal" style="text-decoration:underline">Seguir canjeando</a></div></div>';
-        modal('ria-added', '<span class="icon pe-7s-check" style="font-size:25px;vertical-align:middle"></span> Se agregó con éxito al carrito de compras', body);
+        var body = '<div class="widget widget_recent_product"><ul class="product-categories"><li>' +
+            '<div class="product-thumb"><span class="basket">' + qty + '</span><a><img alt="" src="' + img(b.id, denom) + '"></a></div>' +
+            '<div class="product-info"><p class="marca">' + esc(b.name) + '</p>' +
+            '<h3 class="product-name"><a href="detail-prod.html?b=' + b.id + '&v=' + denom + '">' + esc(b.name) + ' Digital Gift Card $' + denom + '</a></h3>' +
+            '<span class="price">' + qty + ' x ' + fmt(denom * RATE) + ' Puntos</span></div></li></ul></div>' +
+            '<div class="rm__sum"><span>Sub-total (' + t.units + ' ' + plural(t.units) + '):</span><strong>' + fmt(t.pts) + ' Puntos</strong></div>' +
+            '<div class="rm__actions"><a class="button" href="carrito.html">Ver mi carrito de compras</a>' +
+            '<a class="button style-11" href="#" data-dismiss="modal">Seguir canjeando</a></div>';
+        modal('ria-added', '<span class="rm__ok" aria-hidden="true"></span> Se agregó con éxito al carrito de compras', body);
     }
-
     /* ---------- product detail (nominal: the value is part of the product) ---------- */
     var detailBrand = null, detailDenom = 0;
     function isEn() { return !!(window.RiaI18n && window.RiaI18n.lang && window.RiaI18n.lang() === 'en'); }
@@ -649,8 +646,8 @@
         var wrap = first.parentNode;
         var radios = S.emails.map(function (e) {
             return '<div class="radio"><label><input type="radio" name="optradio" value="' + e.id + '"' + (S.emailSel === e.id ? ' checked' : '') + '>' +
-                '<span class="em-text"><span class="em-label">' + esc(e.label) + '</span><span class="em-addr">' + esc(e.email) + '</span></span>' +
-                '<a href="#" class="em-edit" data-edit-email="' + e.id + '"><span class="pe-7s-pen"></span> Editar</a></label></div>';
+                '<span class="em-text"><span class="em-label">' + esc(e.label) + '</span><span class="em-addr">' + esc(e.email).replace('@', '@<wbr>') + '</span></span>' +
+                '<a href="#" class="em-edit" data-edit-email="' + e.id + '" aria-label="Editar"><span class="pe-7s-pen"></span><span class="em-edit__t"> Editar</span></a></label></div>';
         }).join('');        wrap.innerHTML = radios;
         refresh();
     }

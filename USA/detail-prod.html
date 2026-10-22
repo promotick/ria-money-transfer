@@ -18,13 +18,14 @@
         <link rel="stylesheet" type="text/css" href="css/magnific-popup.css">
         <link rel="stylesheet" type="text/css" href="css/style.css">
     <link rel="stylesheet" type="text/css" href="css/usa-responsive.css">
+    <link rel="stylesheet" type="text/css" href="css/ui.css">
     <link rel="stylesheet" type="text/css" href="css/header.css">
     
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;700&display=swap" rel="stylesheet">
         <link rel="icon" type="" href="images/favicon.ico">
-    </head>
+</head>
 
 <body class="home">
             <a class="rh-skip" href="#main">Saltar al contenido</a>
@@ -37,7 +38,7 @@
                 <a href="meta.html" data-nav="meta.html">Mi meta</a>
                 <a href="puntos.html" data-nav="puntos.html">Mis puntos</a>
             </nav>
-            <form class="rh__search" action="busqueda.html" method="get" role="search">
+            <form class="rh__search" action="index.html" method="get" role="search">
                 <input type="search" name="q" placeholder="Buscar aquí" aria-label="Buscar aquí" autocomplete="off">
                 <button type="submit" aria-label="Buscar"><span class="pe-7s-search"></span></button>
             </form>
@@ -82,11 +83,11 @@
     </header>
     <div class="product-details-full">
         <div class="container">
-            <div class="row">
+            <div class="row dp-layout">
                 <div class="col-md-4 col-sm-12">
                     <div class="product-detail-image">
                         <div class="main-image-wapper">
-                            <img class="main-image" src="images/products/usa/amazon.svg" alt="Amazon Gift Card">
+                            <img class="main-image" src="images/products/usa/amazon-20.svg" alt="Amazon Gift Card">
                         </div>
                     </div>
                 </div>
@@ -102,20 +103,17 @@
                         <p class="margin-0"><span class="pe-7s-mail"></span> Entrega digital por correo electrónico</p>
 
                         <div class="product-info margin-top-10">
-                            <label for="denominacion" style="font-weight: 600">Valor de la Gift Card</label><br>
-                            <select id="denominacion" style="width: 220px;height: 40px">
-                                <option value="25">$25 - 2,500 Puntos</option>
-                                <option value="50">$50 - 5,000 Puntos</option>
-                                <option value="100">$100 - 10,000 Puntos</option>
-                            </select>
+                            <p class="dp-value" id="dp-value"><strong class="dp-usd">$25.00</strong> <span class="dp-pts">2,500 Puntos</span></p>
+                            <div class="dp-others" id="dp-others" hidden></div>
                         </div>
-                        <br>
-                        <div class="quantity">
-                            <a style="cursor: pointer;font-size: 20px;">-</a>
-                            <input type="text" size="4" class="input-text qty text text-center" title="Qty" value="01" name="quantity">
-                            <a style="cursor: pointer;font-size: 20px;">+</a>
+                        <div class="dp-buy">
+                            <div class="quantity">
+                                <a href="#" aria-label="Menos">-</a>
+                                <input type="text" size="4" class="input-text qty text text-center" title="Cantidad" aria-label="Cantidad" value="01" name="quantity">
+                                <a href="#" aria-label="Más">+</a>
+                            </div>
+                            <a class="button button-add-cart" href="#" data-quantity="1">Agregar al carrito</a>
                         </div>
-                        <a class="button button-add-cart" data-quantity="1" data-toggle="modal" data-target="#carrito">Agregar al carrito</a>
                     </div>
                 </div>
             </div>
@@ -217,7 +215,7 @@
                                 <li>
                                     <div class="product-thumb" style="position: relative">
                                         <span class="basket">1</span>
-                                        <a><img alt="" src="images/products/usa/amazon.svg"></a>
+                                        <a><img alt="" src="images/products/usa/amazon-20.svg"></a>
                                     </div>
                                     <div class="product-info">
                                         <p class="text-uppercase marca" style="margin: 0">AMAZON</p>
@@ -267,6 +265,7 @@
     <script type="text/javascript" src="js/masonry.js"></script>
     <script type="text/javascript" src="js/functions.js"></script>
     <script type="text/javascript" src="js/i18n.js"></script>
+    <script type="text/javascript" src="js/catalog.js"></script>
     <script type="text/javascript" src="js/proto.js"></script>
 </body>
 

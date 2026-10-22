@@ -15,21 +15,13 @@
     var RATE = 100;            // points per USD
     var MAX_QTY = 20;
 
-    var BRANDS = [
-        { id: 'amazon',     name: 'Amazon',         cat: 'COMPRAS',      denoms: [25, 50, 100], desc: 'Gift Card digital de Amazon válida en Estados Unidos. Úsala en millones de productos de Amazon.com.', descEn: 'Amazon digital Gift Card valid in the United States. Use it on millions of products at Amazon.com.' },
-        { id: 'walmart',    name: 'Walmart',        cat: 'COMPRAS',      denoms: [25, 50, 100], desc: 'Gift Card digital de Walmart. Válida en tiendas Walmart y en Walmart.com.', descEn: 'Walmart digital Gift Card. Valid in Walmart stores and at Walmart.com.' },
-        { id: 'target',     name: 'Target',         cat: 'COMPRAS',      denoms: [25, 50, 100], desc: 'Gift Card digital de Target. Válida en tiendas Target y en Target.com.', descEn: 'Target digital Gift Card. Valid in Target stores and at Target.com.' },
-        { id: 'starbucks',  name: 'Starbucks',      cat: 'RESTAURANTES', denoms: [10, 25, 50],  desc: 'Gift Card digital de Starbucks. Válida en tiendas participantes y en la app de Starbucks.', descEn: 'Starbucks digital Gift Card. Valid at participating stores and in the Starbucks app.' },
-        { id: 'apple',      name: 'Apple',          cat: 'ENTRETENIMIENTO', denoms: [25, 50, 100], desc: 'Gift Card digital de Apple. Úsala en App Store, iTunes, Apple Music, iCloud+ y más.', descEn: 'Apple digital Gift Card. Use it on the App Store, iTunes, Apple Music, iCloud+ and more.' },
-        { id: 'googleplay', name: 'Google Play',    cat: 'ENTRETENIMIENTO', denoms: [10, 25, 50],  desc: 'Gift Card digital de Google Play para apps, juegos, películas y libros.', descEn: 'Google Play digital Gift Card for apps, games, movies and books.' },
-        { id: 'netflix',    name: 'Netflix',        cat: 'ENTRETENIMIENTO', denoms: [25, 50, 100], desc: 'Gift Card digital de Netflix para pagar tu suscripción.', descEn: 'Netflix digital Gift Card to pay for your subscription.' },
-        { id: 'uber',       name: 'Uber Eats',      cat: 'RESTAURANTES', denoms: [15, 25, 50],  desc: 'Gift Card digital de Uber Eats para pedir comida a domicilio.', descEn: 'Uber Eats digital Gift Card to order food delivery.' },
-        { id: 'doordash',   name: 'DoorDash',       cat: 'RESTAURANTES', denoms: [25, 50, 100], desc: 'Gift Card digital de DoorDash para pedidos de comida y compras a domicilio.', descEn: 'DoorDash digital Gift Card for food and grocery delivery.' },
-        { id: 'homedepot',  name: 'The Home Depot', cat: 'HOGAR',        denoms: [25, 50, 100], desc: 'Gift Card digital de The Home Depot. Válida en tiendas y en homedepot.com.', descEn: 'The Home Depot digital Gift Card. Valid in stores and at homedepot.com.' },
-        { id: 'bestbuy',    name: 'Best Buy',       cat: 'TECNOLOGÍA',   denoms: [25, 50, 100], desc: 'Gift Card digital de Best Buy para tecnología, electrodomésticos y entretenimiento.', descEn: 'Best Buy digital Gift Card for tech, appliances and entertainment.' },
-        { id: 'spotify',    name: 'Spotify',        cat: 'ENTRETENIMIENTO', denoms: [10, 30, 60],  desc: 'Gift Card digital de Spotify Premium.', descEn: 'Spotify Premium digital Gift Card.' }
-    ];
+    // catalog data lives in js/catalog.js (single source of truth, also used to generate the card images)
+    var CAT = window.RIA_CATALOG || { CATEGORIES: [], BRANDS: [] };
+    var BRANDS = CAT.BRANDS, CATEGORIES = CAT.CATEGORIES;
 
+    // Nominal products: one card per brand AND value (Amazon $10, Amazon $20, ...)
+    var PRODUCTS = [];
+    BRANDS.forEach(function (b) { b.denoms.forEach(function (d) { PRODUCTS.push({ brand: b, denom: d, pts: d * RATE }); }); });
     /* ---------- helpers ---------- */
     function $(sel, root) { return (root || document).querySelector(sel); }
     function $$(sel, root) { return Array.prototype.slice.call((root || document).querySelectorAll(sel)); }
@@ -40,21 +32,20 @@
     function two(n) { return n < 10 ? '0' + n : String(n); }
     function plural(n) { return n === 1 ? 'producto' : 'productos'; }
     function brand(id) { for (var i = 0; i < BRANDS.length; i++) if (BRANDS[i].id === id) return BRANDS[i]; return BRANDS[0]; }
-    function img(id) { return 'images/products/usa/' + id + '.svg'; }
+    function img(id, denom) { return 'images/products/usa/' + id + '-' + denom + '.svg'; }
     function param(name) { var m = new RegExp('[?&]' + name + '=([^&]*)').exec(location.search); return m ? decodeURIComponent(m[1].replace(/\+/g, ' ')) : ''; }
     function page() { return (location.pathname.split('/').pop() || 'index.html').replace(/\?.*$/, ''); }
     function isEmail(s) { return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(s); }
     function todayISO() { var d = new Date(); return d.getFullYear() + '-' + two(d.getMonth() + 1) + '-' + two(d.getDate()); }
     function fmtDate(iso) { var p = iso.split('-'); return p[2] + '/' + p[1] + '/' + p[0]; }
     function refresh() { if (window.RiaI18n && window.RiaI18n.refresh) window.RiaI18n.refresh(); }
-    function minPts(b) { return b.denoms[0] * RATE; }
 
     /* ---------- state ---------- */
     function seed() {
         var email = 'EduardoNaranjo22@gmail.com';
         return {
             v: 2,
-            user: { name: 'Eduardo', last: 'Naranjo', second: 'Lopez', email: email, phone: '', mobile: '9876543210', birthday: '', advisor: 'Juan', code: '1920152080', company: 'Ria Money Transfer' },
+            user: { name: 'Eduardo', last: 'Naranjo', second: 'Lopez', email: email, phone: '', mobile: '9876543210', birthday: '', code: '1920152080', company: 'Ria Money Transfer' },
             cart: [],
             emails: [{ id: 'e1', label: 'Mi correo', email: email }, { id: 'e2', label: 'Regalo para María', email: 'maria.naranjo@correo.com' }],
             emailSel: 'e1',
@@ -123,11 +114,10 @@
         m.setAttribute('tabindex', '-1');
         m.setAttribute('role', 'dialog');
         m.innerHTML =
-            '<div class="modal-dialog' + (wide ? ' modal-lg' : '') + '" role="document" style="z-index:1041;margin-top:100px"><div class="modal-content">' +
-            '<div class="modal-header" style="padding:20px 40px"><h4 style="margin-bottom:0;font-weight:600;display:inline-block">' + title + '</h4>' +
-            '<button type="button" class="close" data-dismiss="modal" aria-label="Close" style="margin-top:3px">x</button></div>' +
-            '<div class="modal-body margin-bottom-20" style="padding:20px 40px">' + body + '</div></div></div>';
-        document.body.appendChild(m);
+            '<div class="modal-dialog ria-md' + (wide ? ' modal-lg' : '') + '" role="document"><div class="modal-content">' +
+            '<div class="modal-header"><h4 class="modal-title">' + title + '</h4>' +
+            '<button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">&times;</button></div>' +
+            '<div class="modal-body">' + body + '</div></div></div>';        document.body.appendChild(m);
         refresh();
         if (window.jQuery) window.jQuery(m).modal('show');
         return m;
@@ -157,7 +147,7 @@
         }
         var items = S.cart.map(function (l, i) {
             var b = brand(l.id);
-            return '<li><img src="' + img(b.id) + '" alt=""><div class="rh__item-info">' +
+            return '<li><img src="' + img(b.id, l.denom) + '" alt=""><div class="rh__item-info">' +
                 '<a href="detail-prod.html?b=' + b.id + '">' + esc(b.name) + ' Gift Card $' + l.denom + '</a>' +
                 '<span>' + l.qty + ' x ' + fmt(l.denom * RATE) + ' Puntos</span></div>' +
                 '<button type="button" class="rh__remove" data-remove-line="' + i + '" aria-label="Quitar">&times;</button></li>';
@@ -169,7 +159,7 @@
 
     /* ---------- header behaviour: drawer, account menu, current page ---------- */
     var NAV_OF = {
-        'index.html': 'index.html', 'busqueda.html': 'index.html', 'detail-prod.html': 'index.html',
+        'index.html': 'index.html', 'detail-prod.html': 'index.html',
         'meta.html': 'meta.html', 'puntos.html': 'puntos.html', 'detail-canje.html': 'puntos.html',
         'carrito.html': 'carrito.html', 'mi-perfil.html': 'mi-perfil.html', 'edit-direc.html': 'mi-perfil.html',
         'contacto.html': 'contacto.html', 'faq.html': 'faq.html'
@@ -226,106 +216,320 @@
         if (main && !main.id) { main.id = 'main'; main.setAttribute('tabindex', '-1'); }
     }
 
-    /* ---------- catalog / search ---------- */
-    function cardHtml(b) {
-        var lo = b.denoms[0], hi = b.denoms[b.denoms.length - 1];
-        var href = 'detail-prod.html?b=' + b.id;
-        return '<li class="style3 mobile-slide-item col-sm-4 col-md-3 ml-1"><div class="product-item"><div class="product-inner">' +
-            '<div class="product-thumb has-back-image"><a href="' + href + '"><img src="' + img(b.id) + '" alt="' + esc(b.name) + ' Gift Card"></a></div>' +
+    /* ---------- catalog: nominal products, filters, sort ---------- */
+    var PAGE_SIZE = 12;
+
+    function catById(id) { for (var i = 0; i < CATEGORIES.length; i++) if (CATEGORIES[i].id === id) return CATEGORIES[i]; return null; }
+    function catName(id) { var c = catById(id); return c ? c.es : id; }
+
+    function cardHtml(p) {
+        var b = p.brand;
+        var href = 'detail-prod.html?b=' + b.id + '&v=' + p.denom;
+        return '<li class="cat-card"><div class="product-item"><div class="product-inner">' +
+            '<div class="product-thumb"><a href="' + href + '"><img src="' + img(b.id, p.denom) + '" alt="' + esc(b.name) + ' Gift Card $' + p.denom + '" loading="lazy"></a></div>' +
             '<div class="product-info"><p class="marca">' + esc(b.name) + '</p>' +
             '<h3 class="product-name"><a href="' + href + '">' + esc(b.name) + ' Digital Gift Card</a></h3>' +
-            '<span class="price" style="font-weight:600">$' + lo + ' - $' + hi + '</span>' +
-            '<p class="price-from">Desde ' + fmt(minPts(b)) + ' Puntos</p>' +
-            '<a class="button add_to_cart_button" href="#" data-add="' + b.id + '">Agregar al carrito</a></div></div></div></li>';
+            '<span class="price">' + usd(p.denom) + '</span>' +
+            '<p class="price-from">' + fmt(p.pts) + ' Puntos</p>' +
+            '<a class="button add_to_cart_button" href="#" data-add="' + b.id + '" data-denom="' + p.denom + '">Agregar al carrito</a></div></div></div></li>';
     }
 
-    var grid = { list: BRANDS.slice(), sort: 0, onlyAffordable: false, q: '' };
+    var grid = { q: '', cats: [], min: null, max: null, afford: false, sort: 0, shown: PAGE_SIZE };
 
-    function sortList(list, mode) {
-        var l = list.slice();
-        l.sort(function (a, b) {
-            if (mode === 1) return b.name.localeCompare(a.name);
-            if (mode === 2) return minPts(a) - minPts(b) || a.name.localeCompare(b.name);
-            if (mode === 3) return minPts(b) - minPts(a) || a.name.localeCompare(b.name);
-            return a.name.localeCompare(b.name);
+    function numOrNull(v) { var n = parseFloat(v); return isNaN(n) || n < 0 ? null : n; }
+
+    function readUrl() {
+        grid.q = param('q');
+        grid.cats = param('cat') ? param('cat').split(',').filter(catById) : [];
+        grid.min = numOrNull(param('min'));
+        grid.max = numOrNull(param('max'));
+        grid.afford = param('afford') === '1';
+        grid.sort = Math.min(3, Math.max(0, parseInt(param('sort'), 10) || 0));
+        if (rangeInvalid()) grid.max = grid.min;   // never start from an inverted range (e.g. a hand-edited URL)
+    }
+
+    function writeUrl() {
+        var q = [];
+        if (grid.q) q.push('q=' + encodeURIComponent(grid.q));
+        if (grid.cats.length) q.push('cat=' + grid.cats.join(','));
+        if (grid.min !== null) q.push('min=' + grid.min);
+        if (grid.max !== null) q.push('max=' + grid.max);
+        if (grid.afford) q.push('afford=1');
+        if (grid.sort) q.push('sort=' + grid.sort);
+        try { history.replaceState(null, '', location.pathname + (q.length ? '?' + q.join('&') : '')); } catch (e) { /* ignore */ }
+    }
+
+    function rangeInvalid() { return grid.min !== null && grid.max !== null && grid.min > grid.max; }
+
+    function matches(p) {
+        var q = grid.q.trim().toLowerCase();
+        if (q && p.brand.name.toLowerCase().indexOf(q) < 0) return false;
+        if (grid.cats.length && grid.cats.indexOf(p.brand.cat) < 0) return false;
+        if (!rangeInvalid()) {
+            if (grid.min !== null && p.denom < grid.min) return false;
+            if (grid.max !== null && p.denom > grid.max) return false;
+        }
+        if (grid.afford && p.pts > balance()) return false;
+        return true;
+    }
+
+    function sortProducts(list) {
+        return list.slice().sort(function (a, b) {
+            var n = a.brand.name.localeCompare(b.brand.name);
+            if (grid.sort === 1) return -n || a.denom - b.denom;
+            if (grid.sort === 2) return a.denom - b.denom || n;
+            if (grid.sort === 3) return b.denom - a.denom || n;
+            return n || a.denom - b.denom;
         });
-        return l;
+    }
+
+    function activeFilters() {
+        var n = grid.cats.length;
+        if (grid.q.trim()) n++;
+        if (grid.min !== null || grid.max !== null) n++;
+        if (grid.afford) n++;
+        return n;
+    }
+
+    function renderChips() {
+        var box = $('#fp-chips');
+        if (!box) return;
+        var chips = [];
+        if (grid.q.trim()) chips.push(['q', '"' + esc(grid.q.trim()) + '"']);
+        grid.cats.forEach(function (id) { chips.push(['cat:' + id, esc(catName(id))]); });
+        if (grid.min !== null || grid.max !== null) {
+            var lo = grid.min !== null ? '$' + grid.min : '$0', hi = grid.max !== null ? '$' + grid.max : '+';
+            chips.push(['val', 'Valor: ' + lo + ' - ' + hi]);
+        }
+        if (grid.afford) chips.push(['aff', 'Con mis puntos disponibles']);
+        box.innerHTML = chips.map(function (c) {
+            return '<button type="button" class="cat__chip" data-chip="' + c[0] + '"><span>' + c[1] + '</span><i aria-hidden="true">&times;</i></button>';
+        }).join('') + (chips.length > 1 ? '<button type="button" class="cat__clear" data-fp-clear>Limpiar filtros</button>' : '');
     }
 
     function renderGrid() {
         var ul = $('ul.product-list-grid2');
         if (!ul) return;
-        var q = grid.q.toLowerCase();
-        var list = BRANDS.filter(function (b) {
-            if (q && (b.name + ' gift card ' + b.cat).toLowerCase().indexOf(q) < 0) return false;
-            if (grid.onlyAffordable && minPts(b) > balance()) return false;
-            return true;
-        });
-        list = sortList(list, grid.sort);
-        ul.innerHTML = list.map(cardHtml).join('');
+        var list = sortProducts(PRODUCTS.filter(matches));
+        var page = list.slice(0, grid.shown);
+        ul.innerHTML = page.map(cardHtml).join('');
 
         var empty = $('#no-results');
         if (empty) empty.parentNode.removeChild(empty);
         if (!list.length) {
             empty = document.createElement('div');
             empty.id = 'no-results';
-            empty.className = 'text-center';
-            empty.style.cssText = 'padding:50px 0;clear:both';
-            empty.innerHTML = '<p style="font-size:18px;margin-bottom:20px">No encontramos Gift Cards para tu búsqueda</p><a class="button button-add-cart" href="index.html">Ver todo el catálogo</a>';
+            empty.className = 'cat__empty';
+            empty.innerHTML = '<p>No encontramos Gift Cards con estos filtros</p><button type="button" class="fp__btn" data-fp-clear>Limpiar filtros</button>';
             ul.parentNode.insertBefore(empty, ul.nextSibling);
         }
-        var count = $('#result-count');
-        if (count) count.innerHTML = 'Mostrando <span>' + list.length + '</span> resultados para <b>"' + esc(grid.q) + '"</b>';
+
+        var more = $('#fp-more');
+        if (more) {
+            more.hidden = list.length <= page.length;
+            more.querySelector('em').textContent = String(list.length - page.length);
+        }
+        var count = $('#fp-count');
+        if (count) count.innerHTML = 'Mostrando <b>' + list.length + '</b> Gift Cards';
+        var btnCount = $('#fp-apply-count');
+        if (btnCount) btnCount.textContent = String(list.length);
+        var badge = $('#fp-badge');
+        if (badge) { var n = activeFilters(); badge.textContent = String(n); badge.hidden = n === 0; }
+
+        var err = $('#fp-range-err');
+        if (err) err.hidden = !rangeInvalid();
+        ['#fp-min', '#fp-max'].forEach(function (s) { var el = $(s); if (el) el.classList.toggle('is-invalid', rangeInvalid()); });
+        renderChips();
+        $$('#fp-cats input').forEach(function (i) { i.checked = grid.cats.indexOf(i.getAttribute('data-cat')) >= 0; });
+        var aff = $('#fp-affordable'); if (aff) aff.checked = grid.afford;
+        paintSort();
+        writeUrl();
         refresh();
     }
 
-    function initCatalog() {
-        if (!$('ul.product-list-grid2')) return;
-        grid.q = page() === 'busqueda.html' ? param('q') : '';
-        var inp = $('.box-search .search');
-        if (inp && grid.q) inp.value = grid.q;
-        var cnt = $('.col-md-8 > p');
-        if (cnt && page() === 'busqueda.html') cnt.id = 'result-count';
-        var sel = $('select.normal');
-        if (window.jQuery) {
-            if (sel) window.jQuery(sel).on('change', function () { grid.sort = this.selectedIndex; renderGrid(); });
-            window.jQuery(document).on('change', 'input[name="work_days"]', function () { grid.onlyAffordable = this.checked; renderGrid(); });
+    /* ---- sort: custom dropdown (same pattern as the language and account menus) ---- */
+    var SORTS = ['Nombre A - Z', 'Nombre Z - A', 'Menor valor', 'Mayor valor'];
+
+    function paintSort() {
+        var dd = $('#fp-sort');
+        if (!dd || !dd.firstChild) return;
+        $('.dd__label', dd).textContent = SORTS[grid.sort];
+        $$('.dd__opt', dd).forEach(function (o) { o.setAttribute('aria-selected', Number(o.getAttribute('data-value')) === grid.sort ? 'true' : 'false'); });
+    }
+
+    function closeSort(focusBtn) {
+        var dd = $('#fp-sort');
+        if (!dd || !dd.classList.contains('is-open')) return;
+        dd.classList.remove('is-open');
+        var b = $('.dd__btn', dd); b.setAttribute('aria-expanded', 'false');
+        if (focusBtn) b.focus();
+    }
+
+    function initSort() {
+        var dd = $('#fp-sort');
+        if (!dd) return;
+        dd.innerHTML =
+            '<button type="button" class="dd__btn" aria-haspopup="listbox" aria-expanded="false" aria-label="Ordenar">' +
+            '<span class="dd__prefix">Ordenar:</span><span class="dd__label"></span><span class="dd__caret" aria-hidden="true"></span></button>' +
+            '<ul class="dd__menu" role="listbox" aria-label="Ordenar">' + SORTS.map(function (s, i) {
+                return '<li role="presentation"><button type="button" role="option" class="dd__opt" data-value="' + i + '">' + s + '</button></li>';
+            }).join('') + '</ul>';
+        var btn = $('.dd__btn', dd), opts = $$('.dd__opt', dd);
+        function open() {
+            dd.classList.add('is-open'); btn.setAttribute('aria-expanded', 'true');
+            var cur = opts[grid.sort] || opts[0];
+            setTimeout(function () { cur.focus(); }, 30);   // the menu is still visibility:hidden in this frame
         }
+        btn.addEventListener('click', function () { dd.classList.contains('is-open') ? closeSort(true) : open(); });
+        dd.addEventListener('click', function (e) {
+            var o = e.target.closest('.dd__opt');
+            if (!o) return;
+            grid.sort = Number(o.getAttribute('data-value')); grid.shown = PAGE_SIZE;
+            closeSort(true); renderGrid();
+        });
+        dd.addEventListener('keydown', function (e) {
+            if (!dd.classList.contains('is-open')) { if (e.key === 'ArrowDown' && document.activeElement === btn) { e.preventDefault(); open(); } return; }
+            var i = opts.indexOf(document.activeElement);
+            if (e.key === 'ArrowDown') { e.preventDefault(); opts[Math.min(opts.length - 1, i + 1)].focus(); }
+            else if (e.key === 'ArrowUp') { e.preventDefault(); opts[Math.max(0, i - 1)].focus(); }
+            else if (e.key === 'Escape') { e.preventDefault(); closeSort(true); }
+            else if (e.key === 'Tab') closeSort(false);
+        });
+        document.addEventListener('click', function (e) { if (!dd.contains(e.target)) closeSort(false); });
+        paintSort();
+    }
+
+    function resetFilters() {
+        grid.q = ''; grid.cats = []; grid.min = null; grid.max = null; grid.afford = false; grid.shown = PAGE_SIZE;
+        var q = $('#fp-q'); if (q) q.value = '';
+        var hq = $('.rh__search input'); if (hq) hq.value = '';
+        var mn = $('#fp-min'); if (mn) mn.value = '';
+        var mx = $('#fp-max'); if (mx) mx.value = '';
         renderGrid();
     }
 
-    /* choose value + quantity modal (catalog) */
-    function openChooser(id) {
-        var b = brand(id);
-        var opts = b.denoms.map(function (d, i) {
-            return '<label class="ria-denom"><input type="radio" name="ria-denom" value="' + d + '"' + (i === 0 ? ' checked' : '') + '><span>$' + d + '<small>' + fmt(d * RATE) + ' Puntos</small></span></label>';
-        }).join('');
-        var body = '<div class="row"><div class="col-sm-4"><img alt="" src="' + img(b.id) + '" style="width:100%"></div>' +
-            '<div class="col-sm-8"><p class="text-uppercase marca" style="margin:0">' + esc(b.name) + '</p>' +
-            '<h3 class="product-name" style="margin:0 0 10px">' + esc(b.name) + ' Digital Gift Card</h3>' +
-            '<p style="font-weight:600;margin-bottom:6px">Valor de la Gift Card</p><div class="ria-denoms">' + opts + '</div>' +
-            '<div class="dis-flexcent" style="margin-top:15px"><div class="quantity" style="display:inline-flex;align-items:center;margin-right:20px">' +
-            '<a href="#" style="font-size:20px">-</a><input type="text" style="margin:0 10px" size="4" class="input-text qty text text-center" value="01" name="quantity" aria-label="Cantidad"><a href="#" style="font-size:20px">+</a></div>' +
-            '<a class="button button-add-cart" href="#" data-confirm-add="' + b.id + '">Agregar al carrito</a></div></div></div>';
-        modal('ria-choose', 'Elige el valor de tu Gift Card', body);
+    function setPanel(open) {
+        var panel = $('#fp-panel'), ov = $('#fp-overlay'), btn = $('#fp-open');
+        if (!panel) return;
+        panel.classList.toggle('fp--open', open);
+        if (ov) ov.classList.toggle('is-on', open);
+        document.body.classList.toggle('rh-lock', open);
+        if (btn) btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    }
+
+    function debounce(fn, ms) { var t; return function () { var a = arguments, c = this; clearTimeout(t); t = setTimeout(function () { fn.apply(c, a); }, ms); }; }
+
+    function initCatalog() {
+        if (!$('ul.product-list-grid2')) return;
+        readUrl();
+
+        // category list (real catalog counts supplied by RIA)
+        var cats = $('#fp-cats');
+        if (cats) {
+            cats.innerHTML = CATEGORIES.map(function (c) {
+                return '<li><label class="fp__check"><input type="checkbox" data-cat="' + c.id + '"><span class="fp__name">' + esc(c.es) + '</span><em>(' + c.count + ')</em></label></li>';
+            }).join('');
+        }
+        var q = $('#fp-q'), hq = $('.rh__search input'), mn = $('#fp-min'), mx = $('#fp-max');
+        if (q) q.value = grid.q;
+        if (hq) hq.value = grid.q;
+        if (mn && grid.min !== null) mn.value = grid.min;
+        if (mx && grid.max !== null) mx.value = grid.max;
+
+        function applyQuery(v) { grid.q = v; grid.shown = PAGE_SIZE; renderGrid(); }
+        if (q) q.addEventListener('input', debounce(function () { if (hq) hq.value = q.value; applyQuery(q.value); }, 120));
+        // the header search box filters this same catalog instead of opening another page
+        var hform = hq && hq.form;
+        if (hform) hform.addEventListener('submit', function (e) { e.preventDefault(); if (q) q.value = hq.value; applyQuery(hq.value); setPanel(false); });
+        // Value range: digits only (no negatives / decimals). While typing an inverted range is just flagged;
+        // on blur / Enter it is corrected to the other field's value and the user is told why.
+        var note = $('#fp-range-note'), noteTimer;
+        function flash(msg) {
+            if (!note) return;
+            note.textContent = msg; note.hidden = false;
+            clearTimeout(noteTimer); noteTimer = setTimeout(function () { note.hidden = true; }, 4500);
+            refresh();
+        }
+        function digits(el) { var v = el.value.replace(/\D/g, '').slice(0, 4); if (v !== el.value) el.value = v; return v; }
+        function rangeInput(which, el) {
+            var v = digits(el);
+            grid[which] = v === '' ? null : parseInt(v, 10);
+            if (note) note.hidden = true;
+            grid.shown = PAGE_SIZE; renderGrid();
+        }
+        function rangeCommit(which) {
+            if (!rangeInvalid()) return;
+            if (which === 'max') { grid.max = grid.min; mx.value = String(grid.max); flash('Ajustamos el máximo a $' + grid.max + ' para que no sea menor que el mínimo.'); }
+            else { grid.min = grid.max; mn.value = String(grid.min); flash('Ajustamos el mínimo a $' + grid.min + ' para que no sea mayor que el máximo.'); }
+            grid.shown = PAGE_SIZE; renderGrid();
+        }
+        if (mn && mx) {
+            var vals = PRODUCTS.map(function (p) { return p.denom; });
+            mn.placeholder = String(Math.min.apply(null, vals));
+            mx.placeholder = String(Math.max.apply(null, vals));
+            [['min', mn], ['max', mx]].forEach(function (pair) {
+                var which = pair[0], el = pair[1];
+                el.addEventListener('input', debounce(function () { rangeInput(which, el); }, 150));
+                el.addEventListener('blur', function () { rangeInput(which, el); rangeCommit(which); });
+                el.addEventListener('keydown', function (e) {
+                    if (e.key === 'Enter') { e.preventDefault(); rangeInput(which, el); rangeCommit(which); el.blur(); }
+                });
+            });
+        }
+
+        var aff = $('#fp-affordable');
+        if (aff) aff.addEventListener('change', function () { grid.afford = aff.checked; grid.shown = PAGE_SIZE; renderGrid(); });
+        if (cats) cats.addEventListener('change', function (e) {
+            var id = e.target.getAttribute('data-cat');
+            if (!id) return;
+            var i = grid.cats.indexOf(id);
+            if (e.target.checked && i < 0) grid.cats.push(id);
+            if (!e.target.checked && i >= 0) grid.cats.splice(i, 1);
+            grid.shown = PAGE_SIZE; renderGrid();
+        });
+
+        initSort();
+
+        var more = $('#fp-more');
+        if (more) more.addEventListener('click', function () { grid.shown += PAGE_SIZE; renderGrid(); });
+
+        // mobile filter drawer
+        var open = $('#fp-open');
+        if (open) open.addEventListener('click', function () { setPanel(true); });
+        $$('.fp__close, #fp-overlay, #fp-apply').forEach(function (el) { el.addEventListener('click', function () { setPanel(false); }); });
+        document.addEventListener('keydown', function (e) { if (e.key === 'Escape') setPanel(false); });
+        window.addEventListener('resize', function () { if (window.innerWidth >= 992) setPanel(false); });
+
+        document.addEventListener('click', function (e) {
+            var chip = e.target.closest && e.target.closest('[data-chip]');
+            if (chip) {
+                var k = chip.getAttribute('data-chip');
+                if (k === 'q') { grid.q = ''; if (q) q.value = ''; if (hq) hq.value = ''; }
+                else if (k === 'val') { grid.min = null; grid.max = null; if (mn) mn.value = ''; if (mx) mx.value = ''; }
+                else if (k === 'aff') grid.afford = false;
+                else if (k.indexOf('cat:') === 0) grid.cats = grid.cats.filter(function (c) { return c !== k.slice(4); });
+                grid.shown = PAGE_SIZE; renderGrid();
+                return;
+            }
+            if (e.target.closest && e.target.closest('[data-fp-clear], #fp-clear')) { e.preventDefault(); resetFilters(); }
+        });
+        renderGrid();
     }
 
     function openAdded(id, denom, qty) {
         var b = brand(id), t = cartTotals();
-        var body = '<div class="widget widget_recent_product row"><div class="col-md-12"><ul class="product-categories"><li>' +
-            '<div class="product-thumb" style="position:relative"><span class="basket">' + qty + '</span><a><img alt="" src="' + img(b.id) + '"></a></div>' +
-            '<div class="product-info"><p class="text-uppercase marca" style="margin:0">' + esc(b.name) + '</p>' +
-            '<h3 class="product-name" style="margin-bottom:5px"><a href="detail-prod.html?b=' + b.id + '">' + esc(b.name) + ' Digital Gift Card $' + denom + '</a></h3>' +
-            '<span class="price" style="font-weight:600">' + qty + ' x ' + fmt(denom * RATE) + ' Puntos</span></div></li></ul></div></div>' +
-            '<div class="row margin-bottom-20"><div class="col-md-6"><h5 style="font-weight:600">Sub-total (' + t.units + ' ' + plural(t.units) + '):</h5></div>' +
-            '<div class="col-md-6"><h5 style="font-weight:600">' + fmt(t.pts) + ' Puntos</h5></div></div>' +
-            '<div class="row text-center"><div class="col-md-12"><a class="button style-10" href="carrito.html">Ver mi carrito de compras</a></div></div><br>' +
-            '<div class="row text-center"><div class="col-md-12">o <a href="#" data-dismiss="modal" style="text-decoration:underline">Seguir canjeando</a></div></div>';
-        modal('ria-added', '<span class="icon pe-7s-check" style="font-size:25px;vertical-align:middle"></span> Se agregó con éxito al carrito de compras', body);
+        var body = '<div class="widget widget_recent_product"><ul class="product-categories"><li>' +
+            '<div class="product-thumb"><span class="basket">' + qty + '</span><a><img alt="" src="' + img(b.id, denom) + '"></a></div>' +
+            '<div class="product-info"><p class="marca">' + esc(b.name) + '</p>' +
+            '<h3 class="product-name"><a href="detail-prod.html?b=' + b.id + '&v=' + denom + '">' + esc(b.name) + ' Digital Gift Card $' + denom + '</a></h3>' +
+            '<span class="price">' + qty + ' x ' + fmt(denom * RATE) + ' Puntos</span></div></li></ul></div>' +
+            '<div class="rm__sum"><span>Sub-total (' + t.units + ' ' + plural(t.units) + '):</span><strong>' + fmt(t.pts) + ' Puntos</strong></div>' +
+            '<div class="rm__actions"><a class="button" href="carrito.html">Ver mi carrito de compras</a>' +
+            '<a class="button style-11" href="#" data-dismiss="modal">Seguir canjeando</a></div>';
+        modal('ria-added', '<span class="rm__ok" aria-hidden="true"></span> Se agregó con éxito al carrito de compras', body);
     }
-
-    /* ---------- product detail ---------- */
-    var detailBrand = null;
+    /* ---------- product detail (nominal: the value is part of the product) ---------- */
+    var detailBrand = null, detailDenom = 0;
     function isEn() { return !!(window.RiaI18n && window.RiaI18n.lang && window.RiaI18n.lang() === 'en'); }
 
     // Brand-specific copy is chosen per language (the generic dictionary cannot cover it).
@@ -338,36 +542,50 @@
     }
 
     var TITLES = {
-        'index.html': ['Gift Cards', 'Gift Cards'], 'busqueda.html': ['Búsqueda', 'Search'], 'carrito.html': ['Mi carrito', 'My cart'],
+        'index.html': ['Gift Cards', 'Gift Cards'], 'carrito.html': ['Mi carrito', 'My cart'],
         'checkout.html': ['Canje', 'Checkout'], 'checkout-ok.html': ['Canje exitoso', 'Redemption successful'], 'puntos.html': ['Mis puntos', 'My points'],
         'detail-canje.html': ['Detalle de canje', 'Redemption details'], 'meta.html': ['Mi meta', 'My goal'], 'mi-perfil.html': ['Mi perfil', 'My profile'],
         'edit-direc.html': ['Correo de envío', 'Delivery email'], 'contacto.html': ['Contáctanos', 'Contact us'], 'faq.html': ['Preguntas frecuentes', 'FAQ'],
         'tyc.html': ['Términos y condiciones', 'Terms and conditions'], 'login.html': ['Inicia sesión', 'Log in']
     };
     function paintTitle() {
-        if (page() === 'detail-prod.html' && detailBrand) { document.title = detailBrand.name + ' Digital Gift Card - Ria Money Transfer USA'; return; }
+        if (page() === 'detail-prod.html' && detailBrand) { document.title = detailBrand.name + ' Digital Gift Card $' + detailDenom + ' - Ria Money Transfer USA'; return; }
         var t = TITLES[page()];
         if (t) document.title = t[isEn() ? 1 : 0] + ' - Ria Money Transfer USA';
     }
     document.addEventListener('ria-lang', function () { paintDetailText(); paintTitle(); });
 
     function initDetail() {
-        var sel = $('#denominacion');
-        if (!sel) return;
+        var holder = $('#dp-value');
+        if (!holder) return;
         var b = brand(param('b') || 'amazon');
-        document.title = b.name + ' Digital Gift Card - Ria Money Transfer';
+        var v = parseInt(param('v'), 10);
+        if (b.denoms.indexOf(v) < 0) v = b.denoms[0];
+        detailBrand = b; detailDenom = v;
+
         var h = $('.product-details-right .product-name'); if (h) h.textContent = b.name.toUpperCase();
         var sub = $('.count-review'); if (sub) sub.textContent = b.name + ' Digital Gift Card';
-        var im = $('.main-image'); if (im) { im.src = img(b.id); im.alt = b.name + ' Gift Card'; }
-        var crumbs = $('.product-details-right .breadcrumbs span'); if (crumbs) crumbs.textContent = b.cat;
-        detailBrand = b;
+        var im = $('.main-image'); if (im) { im.src = img(b.id, v); im.alt = b.name + ' Gift Card $' + v; }
+        var crumb = $('.product-details-right .breadcrumbs a:nth-of-type(2)');
+        if (crumb) { crumb.textContent = catName(b.cat); crumb.setAttribute('href', 'index.html?cat=' + b.cat); }
+        var crumbEnd = $('.product-details-right .breadcrumbs span'); if (crumbEnd) crumbEnd.textContent = b.name + ' $' + v;
+
+        holder.innerHTML = '<strong class="dp-usd">' + usd(v) + '</strong> <span class="dp-pts">' + fmt(v * RATE) + ' Puntos</span>';
+        var others = $('#dp-others');
+        if (others) {
+            var rest = b.denoms.filter(function (d) { return d !== v; });
+            others.hidden = !rest.length;
+            others.innerHTML = rest.length ? '<p class="dp-others__title">Otros valores</p><div class="dp-others__list">' + rest.map(function (d) {
+                return '<a class="dp-chip" href="detail-prod.html?b=' + b.id + '&v=' + d + '">$' + d + '</a>';
+            }).join('') + '</div>' : '';
+        }
         paintDetailText();
-        sel.innerHTML = b.denoms.map(function (d) { return '<option value="' + d + '">$' + d + ' - ' + fmt(d * RATE) + ' Puntos</option>'; }).join('');
-        if (window.jQuery) window.jQuery(sel).trigger('chosen:updated');
+        paintTitle();
+
         var btn = $('.product-details-right .button-add-cart');
         if (btn) {
             btn.removeAttribute('data-toggle'); btn.removeAttribute('data-target');
-            btn.setAttribute('href', '#'); btn.setAttribute('data-detail-add', b.id);
+            btn.setAttribute('href', '#'); btn.setAttribute('data-detail-add', b.id); btn.setAttribute('data-denom', v);
         }
         refresh();
     }
@@ -397,7 +615,7 @@
         var rows = S.cart.map(function (l, i) {
             var b = brand(l.id);
             return '<tr class="cart-item-row" data-line="' + i + '">' +
-                '<td class="product-thumbnail"><img src="' + img(b.id) + '" alt=""></td>' +
+                '<td class="product-thumbnail"><img src="' + img(b.id, l.denom) + '" alt=""></td>' +
                 '<td class="product-name"><a href="detail-prod.html?b=' + b.id + '">' + esc(b.name) + ' Digital Gift Card $' + l.denom + '</a><p class="marca">Gift Card digital</p></td>' +
                 '<td>' + fmt(l.denom * RATE) + '</td><td>' + usd(l.denom) + '</td>' +
                 '<td><div class="quantity"><a href="#" style="cursor:pointer;font-size:20px">-</a>' +
@@ -427,11 +645,10 @@
         if (!first) return;
         var wrap = first.parentNode;
         var radios = S.emails.map(function (e) {
-            return '<div class="radio"><label style="width:100%"><input type="radio" name="optradio" value="' + e.id + '"' + (S.emailSel === e.id ? ' checked' : '') + '>' +
-                '<span style="font-weight:600">' + esc(e.label) + '</span><br><p style="display:inline-block">' + esc(e.email) + '</p>' +
-                '<a href="#" data-edit-email="' + e.id + '" style="text-decoration:underline;float:right"><span class="pe-7s-pen"></span> Editar</a></label></div>';
-        }).join('');
-        wrap.innerHTML = radios;
+            return '<div class="radio"><label><input type="radio" name="optradio" value="' + e.id + '"' + (S.emailSel === e.id ? ' checked' : '') + '>' +
+                '<span class="em-text"><span class="em-label">' + esc(e.label) + '</span><span class="em-addr">' + esc(e.email).replace('@', '@<wbr>') + '</span></span>' +
+                '<a href="#" class="em-edit" data-edit-email="' + e.id + '" aria-label="Editar"><span class="pe-7s-pen"></span><span class="em-edit__t"> Editar</span></a></label></div>';
+        }).join('');        wrap.innerHTML = radios;
         refresh();
     }
 
@@ -449,7 +666,7 @@
         var back = $$('li', list).filter(function (li) { return $('a[href="carrito.html"]', li); })[0];
         var html = S.cart.map(function (l) {
             var b = brand(l.id);
-            return '<li><div class="product-thumb" style="position:relative"><span class="basket">' + l.qty + '</span><a><img alt="" src="' + img(b.id) + '"></a></div>' +
+            return '<li><div class="product-thumb" style="position:relative"><span class="basket">' + l.qty + '</span><a><img alt="" src="' + img(b.id, l.denom) + '"></a></div>' +
                 '<div class="product-info"><p class="text-uppercase marca" style="margin:0">' + esc(b.name) + '</p>' +
                 '<h3 class="product-name" style="margin-bottom:5px"><a href="detail-prod.html?b=' + b.id + '">' + esc(b.name) + ' Digital Gift Card $' + l.denom + '</a></h3>' +
                 '<span class="price" style="font-weight:600">' + usd(l.denom * l.qty) + '</span></div></li>';
@@ -560,7 +777,7 @@
     function itemsList(o) {
         return '<ul class="product-categories">' + o.items.map(function (l) {
             var b = brand(l.id);
-            return '<li><div class="product-thumb"><a><img alt="" src="' + img(b.id) + '"></a></div><div class="product-info">' +
+            return '<li><div class="product-thumb"><a><img alt="" src="' + img(b.id, l.denom) + '"></a></div><div class="product-info">' +
                 '<h3 class="product-name"><a>' + esc(b.name) + ' Digital Gift Card $' + l.denom + '</a></h3>' +
                 '<span class="price" style="font-weight:600">' + l.qty + ' x ' + fmt(l.denom * RATE) + ' Puntos</span></div></li>';
         }).join('') + '</ul>';
@@ -569,16 +786,16 @@
     function totalLabel(o) { return o.pay === 'points' ? fmt(orderPts(o)) + ' Puntos' : usd(orderUsd(o)); }
 
     function initCheckoutOk() {
-        var tiles = $$('div[style*="dashed"]');
+        var tiles = $$('.ord-card');
         if (tiles.length !== 4) return;
         var o = currentOrder();
         if (!o) { location.replace('index.html'); return; }
-        var span = $('h3 + p span'); if (span) span.textContent = o.email;
+        var span = $('.container > p.text-center span'); if (span) span.textContent = o.email;
         var vals = [fmtDate(o.date), o.no, o.email, totalLabel(o)];
-        tiles.forEach(function (t, i) { var p = $$('p', t)[1]; if (p) p.textContent = vals[i]; });
-        var row = tiles[0].closest('.row');
+        tiles.forEach(function (t, i) { var p = $('.ord-card__value', t); if (p) p.textContent = vals[i]; });
+        var row = tiles[0].parentNode;   // .ord-grid
         var list = document.createElement('div');
-        list.className = 'row margin-top-20';
+        list.className = 'row margin-top-20 ord-items';
         list.innerHTML = '<div class="col-md-12"><p style="font-weight:600;font-size:16px;color:#222">Gift Cards de tu canje</p>' +
             '<div class="widget widget_recent_product">' + itemsList(o) + '</div></div>';
         row.parentNode.insertBefore(list, row.nextSibling);
@@ -652,20 +869,19 @@
         if (!w || page() !== 'detail-canje.html') return;
         var o = currentOrder();
         if (!o) { location.replace('puntos.html'); return; }
-        function cell(icon, title, body) {
-            return '<div class="col-md-6"><h2 class="widget-title" style="font-weight:600"><span class="icon ' + icon + '"></span> ' + title + '</h2><div class="col-md-12">' + body + '</div></div>';
+        function card(icon, title, body) {
+            return '<div class="ord-card"><p class="ord-card__title"><span class="icon ' + icon + '"></span> ' + title + '</p><p class="ord-card__value">' + body + '</p></div>';
         }
         w.innerHTML =
-            '<div class="row">' + cell('pe-7s-news-paper', 'Nº pedido:', '<p>' + o.no + '</p>') + cell('pe-7s-date', 'Fecha:', '<p>' + fmtDate(o.date) + '</p>') + '</div>' +
-            '<div class="row">' + cell('pe-7s-mail', 'Correo de envío:', '<p>' + esc(o.email) + '</p>') + '</div>' +
-            '<div class="row">' + cell('pe-7s-cart', 'Detalle de canje:', itemsList(o)) +
-            '<div class="col-md-6"><h2 class="widget-title" style="font-weight:600"><span class="icon pe-7s-credit"></span> Total:</h2>' +
-            '<div class="col-md-12" style="background:#fb5701;padding-top:10px;padding-bottom:10px;border-radius:5px"><span class="price" style="font-weight:600;color:#fff">' + totalLabel(o) + '</span></div></div></div>';
-        refresh();
+            '<div class="ord-grid">' +
+            card('pe-7s-news-paper', 'Nº pedido:', o.no) + card('pe-7s-date', 'Fecha:', fmtDate(o.date)) +
+            card('pe-7s-mail', 'Correo de envío:', esc(o.email)) + card('pe-7s-credit', 'Total:', totalLabel(o)) +
+            '</div>' +
+            '<h3 class="ord-sub"><span class="icon pe-7s-cart"></span> Detalle de canje:</h3>' + itemsList(o);        refresh();
     }
 
     /* ---------- profile / delivery emails ---------- */
-    var PROFILE_KEYS = ['code', 'company', 'name', 'last', 'second', 'email', 'phone', 'mobile', 'birthday', 'advisor'];
+    var PROFILE_KEYS = ['code', 'company', 'name', 'last', 'second', 'email', 'phone', 'mobile', 'birthday'];
 
     function renderEmailCards() {
         var tab = $('#tab-2');
@@ -695,7 +911,7 @@
         var mail = inputs[5].value.trim();
         if (!inputs[2].value.trim() || !inputs[3].value.trim()) { toast('Ingresa tu nombre y apellido.', 'warn'); return; }
         if (!isEmail(mail)) { toast('Ingresa un correo electrónico válido.', 'warn'); return; }
-        var np = inputs[11], cp = inputs[12];
+        var np = inputs[10], cp = inputs[11];
         if (np.value || cp.value) {
             if (np.value.length < 6) { toast('La nueva contraseña debe tener al menos 6 caracteres.', 'warn'); return; }
             if (np.value !== cp.value) { toast('Las contraseñas no coinciden.', 'warn'); return; }
@@ -774,26 +990,21 @@
         function closest(sel) { return t.closest ? t.closest(sel) : null; }
         var el;
 
-        if ((el = closest('[data-add]'))) { e.preventDefault(); openChooser(el.getAttribute('data-add')); return; }
-
-        if ((el = closest('[data-confirm-add]'))) {
+        if ((el = closest('[data-add]'))) {
             e.preventDefault();
-            var m = el.closest('.modal');
-            var denom = Number($('input[name="ria-denom"]:checked', m).value), qty = qtyOf($('.qty', m));
-            addToCart(el.getAttribute('data-confirm-add'), denom, qty);
-            hideModal('ria-choose'); renderHeader();
-            setTimeout(function () { openAdded(el.getAttribute('data-confirm-add'), denom, qty); }, 350);
+            var bid = el.getAttribute('data-add'), dn = Number(el.getAttribute('data-denom'));
+            addToCart(bid, dn, 1);
+            renderHeader(); openAdded(bid, dn, 1);
             return;
         }
 
         if ((el = closest('[data-detail-add]'))) {
             e.preventDefault();
-            var d = Number($('#denominacion').value), q = qtyOf($('.quantity .qty'));
+            var d = Number(el.getAttribute('data-denom')), q = qtyOf($('.quantity .qty'));
             addToCart(el.getAttribute('data-detail-add'), d, q);
             renderHeader(); openAdded(el.getAttribute('data-detail-add'), d, q);
             return;
         }
-
         if ((el = closest('[data-remove-line]'))) {
             e.preventDefault();
             S.cart.splice(Number(el.getAttribute('data-remove-line')), 1);
@@ -859,8 +1070,18 @@
     });
 
     /* ---------- init ---------- */
+    // "scroll to top" button: visible only once the page has been scrolled a bit
+    function initScrollTop() {
+        var btn = $('.scroll_top');
+        if (!btn) return;
+        function onScroll() { btn.classList.toggle('is-visible', window.pageYOffset > 400); }
+        window.addEventListener('scroll', onScroll, { passive: true });
+        btn.addEventListener('click', function (e) { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); });
+        onScroll();
+    }
     function init() {
         renderHeader();
+        initScrollTop();
         initHeader();
         initCatalog();
         initDetail();

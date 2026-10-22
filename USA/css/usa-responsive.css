@@ -261,3 +261,25 @@ html.i18n-pending body {
     font-size: 12.5px;
     line-height: 1.5;
 }
+/* ---- Product detail: nominal value + other values of the same brand ---- */
+.dp-value { margin: 6px 0 4px; }
+.dp-usd { display: inline-block; margin-right: 8px; font-size: 30px; font-weight: 700; color: #1f2933; }
+.dp-pts { color: #6b7280; font-size: 15px; }
+.dp-others { margin: 14px 0 6px; }
+.dp-others[hidden] { display: none; }
+.dp-others__title { margin: 0 0 8px; font-size: 13px; font-weight: 600; color: #6b7280; }
+.dp-others__list { display: flex; flex-wrap: wrap; gap: 8px; }
+.dp-chip {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 64px;
+    min-height: 40px;
+    padding: 0 14px;
+    border: 1px solid #e5e7eb;
+    border-radius: 20px;
+    color: #1f2933;
+    font-weight: 600;
+    text-decoration: none;
+}
+.dp-chip:hover { border-color: #FF5700; color: #FF5700; }

@@ -120,6 +120,44 @@
         'Eventualmente, los productos, modelos y puntajes de los premios pueden sufrir variaciones. Además, el catálogo de productos podrá renovarse o modificarse a solicitud de Mego Networks.': 'Occasionally, rewards, models and point values may vary. The catalog may also be renewed or modified at the request of Mego Networks.',
         'RIA se reserva el derecho de cancelar la participación en el programa a cualquier participante o titular que infrinja las reglas establecidas en el presente reglamento y/o cualquier otra regla que a criterio de RIA descalifique al participante y/o titular.': 'RIA reserves the right to cancel the participation of any participant or holder who breaches the rules set out in these regulations and/or any other rule that, in RIA\'s judgment, disqualifies the participant and/or holder.',
         'Tu carrito está vacío': 'Your cart is empty',
+        'Ordenar:': 'Sort:',
+        'Nombre A - Z': 'Name A - Z',
+        'Nombre Z - A': 'Name Z - A',
+        'Menor valor': 'Lowest value',
+        'Mayor valor': 'Highest value',
+        'Menos': 'Less',
+        'Más': 'More',
+        'Cantidad': 'Quantity',
+        'Filtros': 'Filters',
+        'Cerrar filtros': 'Close filters',
+        'Buscar marca': 'Search brand',
+        'Ej. Amazon': 'E.g. Amazon',
+        'Categorías': 'Categories',
+        'Mínimo': 'Min',
+        'Máximo': 'Max',
+        'El máximo debe ser igual o mayor que el mínimo.': 'The maximum must be equal to or greater than the minimum.',
+        'Con mis puntos disponibles': 'With my available points',
+        'Limpiar filtros': 'Clear filters',
+        'Ver': 'View',
+        'resultados': 'results',
+        'Ver más': 'Show more',
+        'Ordenar': 'Sort',
+        'Catálogo': 'Catalog',
+        'No encontramos Gift Cards con estos filtros': 'No Gift Cards match these filters',
+        'Otros valores': 'Other values',
+        'Belleza': 'Beauty',
+        'Caridad': 'Charity',
+        'Entretenimiento': 'Entertainment',
+        'Familia': 'Family',
+        'Moda': 'Fashion',
+        'Comida': 'Food',
+        'Videojuegos': 'Gaming',
+        'Regalos': 'Gifts',
+        'Hogar': 'Home',
+        'Prepago': 'Prepaid',
+        'Tiendas': 'Retail',
+        'Deportes': 'Sports',
+        'Viajes': 'Travel',
         'Recibirás tus Gift Cards digitales en el correo que elijas en un plazo de 3 a 5 días hábiles.': 'You will receive your digital Gift Cards at your chosen email address within 3 to 5 business days.',
         'Recibirás tus Gift Cards digitales en el correo indicado en un plazo de 3 a 5 días hábiles.': 'You will receive your digital Gift Cards at the email address provided within 3 to 5 business days.',
         'Las Gift Cards digitales se envían por correo electrónico en un plazo de 3 a 5 días hábiles después de realizar el canje. Revisa tu carpeta de spam si no la encuentras.': 'Digital Gift Cards are sent by email within 3 to 5 business days after redeeming. Check your spam folder if you cannot find it.',
@@ -336,6 +374,9 @@
     // Sentences that embed numbers or names (written by js/proto.js).
     var PATTERNS = [
         [/^Bienvenido\(a\) (.+)$/, 'Welcome $1'],
+        [/^Valor: (.+)$/, 'Value: $1'],
+        [/^Ajustamos el máximo a (\$\d+) para que no sea menor que el mínimo\.$/, 'We set the maximum to $1 so it is not lower than the minimum.'],
+        [/^Ajustamos el mínimo a (\$\d+) para que no sea mayor que el máximo\.$/, 'We set the minimum to $1 so it is not higher than the maximum.'],
         [/^Bienvenido (?!@)(.+)$/, 'Welcome $1'],
         [/^Desde ([\d,]+) Puntos$/, 'From $1 Points'],
         [/^Después de este canje te quedarán ([\d,]+) puntos\.$/, 'After this redemption you will have $1 points left.'],
@@ -515,7 +556,7 @@
             '.lang-btn{background:none;border:0;padding:2px 4px;font-weight:600;color:#888;cursor:pointer}' +
             '.lang-btn.active{color:#222;border-bottom:2px solid #FF5700}' +
             '.lang-sep{color:#ccc}' +
-            '.lang-floating{position:fixed;top:12px;right:16px;float:none;margin:0;z-index:1000;background:#fff;padding:4px 8px;border-radius:4px;box-shadow:0 1px 4px rgba(0,0,0,.15)}';
+            '.lang-floating{position:absolute;top:12px;right:16px;float:none;margin:0;z-index:1000;background:#fff;padding:4px 8px;border-radius:4px;box-shadow:0 1px 4px rgba(0,0,0,.15)}';
         document.head.appendChild(css);
         buildSwitcher();
         document.addEventListener('click', function (e) {

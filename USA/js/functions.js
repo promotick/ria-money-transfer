@@ -414,7 +414,7 @@
         //MENU REPONSIIVE
         init_menu_reposive();
         //SELECT CHOSEN
-        $("select").chosen();
+        // Native selects everywhere (styled in css/ui.css): better on mobile than the Chosen plugin.
         // Resize Megamenu
         boutique_resizeMegamenu();
 

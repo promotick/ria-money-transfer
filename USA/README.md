@@ -32,5 +32,6 @@ Reset the demo: add `?reset=1` to any URL, or run `RiaProto.reset()` in the cons
 - `js/catalog.js` - brands, values, categories.
 - `js/proto.js` - state, catalog filters, cart, checkout, orders, points, profile.
 - `js/i18n.js` - ES/EN dictionary and switcher (Spanish is the source text in the HTML).
-- `css/header.css`, `css/catalog.css`, `css/usa-responsive.css` - header, catalog panel/grid, responsive fixes and components.
+- `css/ui.css` - shared components (inputs, selects, buttons, quantity stepper, tabs, tables, modals, dropdown `.dd`, scrollbars).
+- `css/header.css`, `css/catalog.css`, `css/usa-responsive.css` - header, catalog panel/grid, responsive fixes and page components.
 - `tools/make-cards.js` - generates the card images from the catalog and the logos in `_logos/`.

@@ -45,7 +45,7 @@
         var email = 'EduardoNaranjo22@gmail.com';
         return {
             v: 2,
-            user: { name: 'Eduardo', last: 'Naranjo', second: 'Lopez', email: email, phone: '', mobile: '9876543210', birthday: '', advisor: 'Juan', code: '1920152080', company: 'Ria Money Transfer' },
+            user: { name: 'Eduardo', last: 'Naranjo', second: 'Lopez', email: email, phone: '', mobile: '9876543210', birthday: '', code: '1920152080', company: 'Ria Money Transfer' },
             cart: [],
             emails: [{ id: 'e1', label: 'Mi correo', email: email }, { id: 'e2', label: 'Regalo para María', email: 'maria.naranjo@correo.com' }],
             emailSel: 'e1',
@@ -246,6 +246,7 @@
         grid.max = numOrNull(param('max'));
         grid.afford = param('afford') === '1';
         grid.sort = Math.min(3, Math.max(0, parseInt(param('sort'), 10) || 0));
+        if (rangeInvalid()) grid.max = grid.min;   // never start from an inverted range (e.g. a hand-edited URL)
     }
 
     function writeUrl() {
@@ -338,13 +339,65 @@
 
         var err = $('#fp-range-err');
         if (err) err.hidden = !rangeInvalid();
+        ['#fp-min', '#fp-max'].forEach(function (s) { var el = $(s); if (el) el.classList.toggle('is-invalid', rangeInvalid()); });
         renderChips();
         $$('#fp-cats input').forEach(function (i) { i.checked = grid.cats.indexOf(i.getAttribute('data-cat')) >= 0; });
         var aff = $('#fp-affordable'); if (aff) aff.checked = grid.afford;
-        var sel = $('#fp-sort');
-        if (sel && sel.selectedIndex !== grid.sort) { sel.selectedIndex = grid.sort; if (window.jQuery) window.jQuery(sel).trigger('chosen:updated'); }
+        paintSort();
         writeUrl();
         refresh();
+    }
+
+    /* ---- sort: custom dropdown (same pattern as the language and account menus) ---- */
+    var SORTS = ['Nombre A - Z', 'Nombre Z - A', 'Menor valor', 'Mayor valor'];
+
+    function paintSort() {
+        var dd = $('#fp-sort');
+        if (!dd || !dd.firstChild) return;
+        $('.dd__label', dd).textContent = SORTS[grid.sort];
+        $$('.dd__opt', dd).forEach(function (o) { o.setAttribute('aria-selected', Number(o.getAttribute('data-value')) === grid.sort ? 'true' : 'false'); });
+    }
+
+    function closeSort(focusBtn) {
+        var dd = $('#fp-sort');
+        if (!dd || !dd.classList.contains('is-open')) return;
+        dd.classList.remove('is-open');
+        var b = $('.dd__btn', dd); b.setAttribute('aria-expanded', 'false');
+        if (focusBtn) b.focus();
+    }
+
+    function initSort() {
+        var dd = $('#fp-sort');
+        if (!dd) return;
+        dd.innerHTML =
+            '<button type="button" class="dd__btn" aria-haspopup="listbox" aria-expanded="false" aria-label="Ordenar">' +
+            '<span class="dd__prefix">Ordenar:</span><span class="dd__label"></span><span class="dd__caret" aria-hidden="true"></span></button>' +
+            '<ul class="dd__menu" role="listbox" aria-label="Ordenar">' + SORTS.map(function (s, i) {
+                return '<li role="presentation"><button type="button" role="option" class="dd__opt" data-value="' + i + '">' + s + '</button></li>';
+            }).join('') + '</ul>';
+        var btn = $('.dd__btn', dd), opts = $$('.dd__opt', dd);
+        function open() {
+            dd.classList.add('is-open'); btn.setAttribute('aria-expanded', 'true');
+            var cur = opts[grid.sort] || opts[0];
+            setTimeout(function () { cur.focus(); }, 30);   // the menu is still visibility:hidden in this frame
+        }
+        btn.addEventListener('click', function () { dd.classList.contains('is-open') ? closeSort(true) : open(); });
+        dd.addEventListener('click', function (e) {
+            var o = e.target.closest('.dd__opt');
+            if (!o) return;
+            grid.sort = Number(o.getAttribute('data-value')); grid.shown = PAGE_SIZE;
+            closeSort(true); renderGrid();
+        });
+        dd.addEventListener('keydown', function (e) {
+            if (!dd.classList.contains('is-open')) { if (e.key === 'ArrowDown' && document.activeElement === btn) { e.preventDefault(); open(); } return; }
+            var i = opts.indexOf(document.activeElement);
+            if (e.key === 'ArrowDown') { e.preventDefault(); opts[Math.min(opts.length - 1, i + 1)].focus(); }
+            else if (e.key === 'ArrowUp') { e.preventDefault(); opts[Math.max(0, i - 1)].focus(); }
+            else if (e.key === 'Escape') { e.preventDefault(); closeSort(true); }
+            else if (e.key === 'Tab') closeSort(false);
+        });
+        document.addEventListener('click', function (e) { if (!dd.contains(e.target)) closeSort(false); });
+        paintSort();
     }
 
     function resetFilters() {
@@ -389,8 +442,41 @@
         // the header search box filters this same catalog instead of opening another page
         var hform = hq && hq.form;
         if (hform) hform.addEventListener('submit', function (e) { e.preventDefault(); if (q) q.value = hq.value; applyQuery(hq.value); setPanel(false); });
-        if (mn) mn.addEventListener('input', debounce(function () { grid.min = numOrNull(mn.value); grid.shown = PAGE_SIZE; renderGrid(); }, 200));
-        if (mx) mx.addEventListener('input', debounce(function () { grid.max = numOrNull(mx.value); grid.shown = PAGE_SIZE; renderGrid(); }, 200));
+        // Value range: digits only (no negatives / decimals). While typing an inverted range is just flagged;
+        // on blur / Enter it is corrected to the other field's value and the user is told why.
+        var note = $('#fp-range-note'), noteTimer;
+        function flash(msg) {
+            if (!note) return;
+            note.textContent = msg; note.hidden = false;
+            clearTimeout(noteTimer); noteTimer = setTimeout(function () { note.hidden = true; }, 4500);
+            refresh();
+        }
+        function digits(el) { var v = el.value.replace(/\D/g, '').slice(0, 4); if (v !== el.value) el.value = v; return v; }
+        function rangeInput(which, el) {
+            var v = digits(el);
+            grid[which] = v === '' ? null : parseInt(v, 10);
+            if (note) note.hidden = true;
+            grid.shown = PAGE_SIZE; renderGrid();
+        }
+        function rangeCommit(which) {
+            if (!rangeInvalid()) return;
+            if (which === 'max') { grid.max = grid.min; mx.value = String(grid.max); flash('Ajustamos el máximo a $' + grid.max + ' para que no sea menor que el mínimo.'); }
+            else { grid.min = grid.max; mn.value = String(grid.min); flash('Ajustamos el mínimo a $' + grid.min + ' para que no sea mayor que el máximo.'); }
+            grid.shown = PAGE_SIZE; renderGrid();
+        }
+        if (mn && mx) {
+            var vals = PRODUCTS.map(function (p) { return p.denom; });
+            mn.placeholder = String(Math.min.apply(null, vals));
+            mx.placeholder = String(Math.max.apply(null, vals));
+            [['min', mn], ['max', mx]].forEach(function (pair) {
+                var which = pair[0], el = pair[1];
+                el.addEventListener('input', debounce(function () { rangeInput(which, el); }, 150));
+                el.addEventListener('blur', function () { rangeInput(which, el); rangeCommit(which); });
+                el.addEventListener('keydown', function (e) {
+                    if (e.key === 'Enter') { e.preventDefault(); rangeInput(which, el); rangeCommit(which); el.blur(); }
+                });
+            });
+        }
 
         var aff = $('#fp-affordable');
         if (aff) aff.addEventListener('change', function () { grid.afford = aff.checked; grid.shown = PAGE_SIZE; renderGrid(); });
@@ -403,8 +489,7 @@
             grid.shown = PAGE_SIZE; renderGrid();
         });
 
-        var sel = $('#fp-sort');
-        if (sel && window.jQuery) window.jQuery(sel).on('change', function () { grid.sort = this.selectedIndex; grid.shown = PAGE_SIZE; renderGrid(); });
+        initSort();
 
         var more = $('#fp-more');
         if (more) more.addEventListener('click', function () { grid.shown += PAGE_SIZE; renderGrid(); });
@@ -563,11 +648,10 @@
         if (!first) return;
         var wrap = first.parentNode;
         var radios = S.emails.map(function (e) {
-            return '<div class="radio"><label style="width:100%"><input type="radio" name="optradio" value="' + e.id + '"' + (S.emailSel === e.id ? ' checked' : '') + '>' +
-                '<span style="font-weight:600">' + esc(e.label) + '</span><br><p style="display:inline-block">' + esc(e.email) + '</p>' +
-                '<a href="#" data-edit-email="' + e.id + '" style="text-decoration:underline;float:right"><span class="pe-7s-pen"></span> Editar</a></label></div>';
-        }).join('');
-        wrap.innerHTML = radios;
+            return '<div class="radio"><label><input type="radio" name="optradio" value="' + e.id + '"' + (S.emailSel === e.id ? ' checked' : '') + '>' +
+                '<span class="em-text"><span class="em-label">' + esc(e.label) + '</span><span class="em-addr">' + esc(e.email) + '</span></span>' +
+                '<a href="#" class="em-edit" data-edit-email="' + e.id + '"><span class="pe-7s-pen"></span> Editar</a></label></div>';
+        }).join('');        wrap.innerHTML = radios;
         refresh();
     }
 
@@ -801,7 +885,7 @@
     }
 
     /* ---------- profile / delivery emails ---------- */
-    var PROFILE_KEYS = ['code', 'company', 'name', 'last', 'second', 'email', 'phone', 'mobile', 'birthday', 'advisor'];
+    var PROFILE_KEYS = ['code', 'company', 'name', 'last', 'second', 'email', 'phone', 'mobile', 'birthday'];
 
     function renderEmailCards() {
         var tab = $('#tab-2');
@@ -831,7 +915,7 @@
         var mail = inputs[5].value.trim();
         if (!inputs[2].value.trim() || !inputs[3].value.trim()) { toast('Ingresa tu nombre y apellido.', 'warn'); return; }
         if (!isEmail(mail)) { toast('Ingresa un correo electrónico válido.', 'warn'); return; }
-        var np = inputs[11], cp = inputs[12];
+        var np = inputs[10], cp = inputs[11];
         if (np.value || cp.value) {
             if (np.value.length < 6) { toast('La nueva contraseña debe tener al menos 6 caracteres.', 'warn'); return; }
             if (np.value !== cp.value) { toast('Las contraseñas no coinciden.', 'warn'); return; }
@@ -990,8 +1074,18 @@
     });
 
     /* ---------- init ---------- */
+    // "scroll to top" button: visible only once the page has been scrolled a bit
+    function initScrollTop() {
+        var btn = $('.scroll_top');
+        if (!btn) return;
+        function onScroll() { btn.classList.toggle('is-visible', window.pageYOffset > 400); }
+        window.addEventListener('scroll', onScroll, { passive: true });
+        btn.addEventListener('click', function (e) { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); });
+        onScroll();
+    }
     function init() {
         renderHeader();
+        initScrollTop();
         initHeader();
         initCatalog();
         initDetail();

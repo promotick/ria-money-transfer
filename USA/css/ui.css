@@ -1,0 +1,441 @@
+/*
+ * Ria USA - shared UI components (one look for every page).
+ *
+ * Loaded LAST in <head>. Base form-control rules use :where() (zero specificity) so page-specific
+ * components (header search, filter panel...) can still refine them; heights use !important only
+ * to beat the inline "height: 38px" left in some of the original pages.
+ *
+ * Tokens: control height 44px (touch target), radius 10px, pill buttons 46px, brand #FF5700.
+ */
+:root {
+    --ui-brand: #FF5700;
+    --ui-brand-dark: #E04D00;
+    --ui-ink: #1f2933;
+    --ui-text: #374151;
+    --ui-muted: #6b7280;
+    --ui-line: #cfd4dc;
+    --ui-line-soft: #e5e7eb;
+    --ui-surface: #f3f4f6;
+    --ui-radius: 10px;
+    --ui-control-h: 44px;
+}
+
+/* ---------- scrollbars: thin and quiet (Firefox + WebKit) ---------- */
+* { scrollbar-width: thin; scrollbar-color: #c9ced6 transparent; }
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #c9ced6; border: 2px solid transparent; border-radius: 10px; background-clip: content-box; }
+::-webkit-scrollbar-thumb:hover { background: #9aa3af; background-clip: content-box; }
+::-webkit-scrollbar-corner { background: transparent; }
+
+/* ---------- focus: one visible ring everywhere ---------- */
+a:focus-visible, button:focus-visible, summary:focus-visible, [tabindex]:focus-visible {
+    outline: 2px solid var(--ui-brand);
+    outline-offset: 2px;
+}
+
+/* ---------- form controls ---------- */
+:where(input:not([type="checkbox"]):not([type="radio"]):not([type="hidden"]):not([type="submit"]):not([type="button"]):not([type="range"]):not([type="file"]):not([type="image"]), select, textarea) {
+    box-sizing: border-box;
+    max-width: 100%;
+    margin: 0;
+    padding: 0 14px;
+    border: 1px solid var(--ui-line);
+    border-radius: var(--ui-radius);
+    background-color: #fff;
+    box-shadow: none;
+    color: var(--ui-ink);
+    font-size: 15px;
+    line-height: 1.3;
+    transition: border-color .15s ease, box-shadow .15s ease;
+}
+
+input:not([type="checkbox"]):not([type="radio"]):not([type="hidden"]):not([type="submit"]):not([type="button"]):not([type="range"]):not([type="file"]):not([type="image"]),
+select {
+    height: var(--ui-control-h) !important;
+}
+
+:where(textarea) {
+    min-height: 96px;
+    padding: 10px 14px;
+    resize: vertical;
+}
+
+:where(input:not([type="checkbox"]):not([type="radio"]):not([type="hidden"]):not([type="submit"]):not([type="button"]), select, textarea):hover {
+    border-color: #b8bec8;
+}
+
+:where(input:not([type="checkbox"]):not([type="radio"]):not([type="hidden"]):not([type="submit"]):not([type="button"]), select, textarea):focus {
+    outline: none;
+    border-color: var(--ui-brand);
+    box-shadow: 0 0 0 3px rgba(255, 87, 0, .18);
+}
+
+:where(input, select, textarea)::placeholder { color: #9ca3af; opacity: 1; }
+
+:where(input, select, textarea):disabled,
+:where(input, textarea)[readonly] {
+    background-color: var(--ui-surface);
+    border-color: var(--ui-line-soft);
+    color: var(--ui-muted);
+    cursor: not-allowed;
+}
+
+:where(input, select, textarea).is-invalid { border-color: #b3261e; background-color: #fff7f6; }
+
+/* native select with our own chevron (the OS picker is the best control on phones) */
+:where(select) {
+    padding-right: 40px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5l5 5 5-5' fill='none' stroke='%236b7280' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    background-size: 12px 8px;
+    -webkit-appearance: none;
+    appearance: none;
+    text-overflow: ellipsis;
+    cursor: pointer;
+}
+
+input[type="checkbox"], input[type="radio"] { accent-color: var(--ui-brand); }
+
+/* labels in forms */
+.newsletter label, .kt-contact-form label, .tab-panel p > label, .tab-panel .row label, form > label, .modal-body label {
+    display: inline-block;
+    margin-bottom: 6px;
+    color: var(--ui-text);
+    font-size: 14px;
+    font-weight: 600;
+}
+.checkbox label, .radio label { font-weight: 400; margin-bottom: 0; }
+
+@media (max-width: 767px) {
+    /* 16px keeps iOS Safari from zooming the page when a field gets focus */
+    :where(input:not([type="checkbox"]):not([type="radio"]), select, textarea) { font-size: 16px; }
+}
+
+/* ---------- buttons: one pill, two variants ---------- */
+.button, a.button, button.button, .button-add-cart {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    box-sizing: border-box;
+    min-height: 46px;
+    height: auto;
+    padding: 0 28px;
+    border: 1px solid var(--ui-brand);
+    border-radius: 23px;
+    background: var(--ui-brand);
+    color: #fff;
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 1.2;
+    text-align: center;
+    text-decoration: none;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: background-color .15s ease, color .15s ease, border-color .15s ease;
+}
+.button:hover, a.button:hover, button.button:hover, .button-add-cart:hover {
+    border-color: var(--ui-brand-dark);
+    background: var(--ui-brand-dark);
+    color: #fff;
+}
+/* secondary (e.g. "Registrarme", "Saltar"): outlined */
+.button.style-11, a.button.style-11 {
+    border-color: var(--ui-brand);
+    background: #fff;
+    color: var(--ui-brand);
+}
+.button.style-11:hover, a.button.style-11:hover { background: #fff4ee; color: var(--ui-brand-dark); border-color: var(--ui-brand-dark); }
+.button[disabled], .button.disabled { opacity: .5; pointer-events: none; }
+
+/* ---------- quantity stepper ---------- */
+.quantity {
+    display: inline-flex;
+    align-items: center;
+    height: var(--ui-control-h);
+    border: 1px solid var(--ui-line);
+    border-radius: 22px;
+    background: #fff;
+    overflow: hidden;
+    vertical-align: middle;
+}
+.quantity a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 100%;
+    color: var(--ui-ink);
+    font-size: 20px;
+    line-height: 1;
+    text-decoration: none;
+    user-select: none;
+    -webkit-user-select: none;
+}
+.quantity a:hover { background: #fff4ee; color: var(--ui-brand); }
+.quantity input.qty, .quantity input {
+    width: 44px !important;
+    height: 100% !important;
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    font-size: 15px;
+    font-weight: 600;
+    text-align: center;
+    -moz-appearance: textfield;
+}
+
+/* ---------- tabs ---------- */
+.box-tabs.nav-tab li a { font-size: 15px; font-weight: 500; }
+.box-tabs.nav-tab li.active a { font-weight: 600; }
+
+/* ---------- tables ---------- */
+table.group-product > tbody > tr > th,
+.shop_table thead th {
+    background: var(--ui-surface);
+    color: #4b5563;
+    font-size: 13px;
+    font-weight: 600;
+}
+table.group-product > tbody > tr > td { font-size: 14px; color: var(--ui-text); }
+table.group-product > tbody > tr:not(:first-child):hover > td { background: #fafafa; }
+
+/* ---------- modals ---------- */
+.modal-content { border: 0; border-radius: 16px; box-shadow: 0 24px 60px rgba(15, 23, 42, .25); }
+.modal-header { border-bottom: 1px solid var(--ui-line-soft); }
+.modal-header .close { color: var(--ui-ink); opacity: .6; text-shadow: none; }
+.modal-header .close:hover { opacity: 1; }
+
+/* ---------- product detail: image and data share one row, vertically aligned ---------- */
+.product-details-full .product-detail-image {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    width: 100%;
+    margin: 0 0 16px;
+    padding: 20px;
+    border: 1px solid var(--ui-line-soft);
+    border-radius: 16px;
+    background: #fff;
+}
+.product-details-full .main-image-wapper { width: 100%; }
+.product-details-full .main-image { display: block; width: 100%; max-width: 360px; height: auto; margin: 0 auto; }
+
+@media (min-width: 768px) {
+    .dp-layout { display: flex; align-items: stretch; }
+    .dp-layout::before, .dp-layout::after { display: none; }
+    .dp-layout > [class*="col-"] { float: none; display: flex; }
+    .product-details-full .product-detail-image { margin: 0; }
+    .dp-layout .product-details-right {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        width: 100%;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    :where(input, select, textarea), .button { transition: none; }
+}
+
+/* ---------- beat the theme's own input / button rules (same specificity, loaded later) ---------- */
+input[type="date"], input[type="text"], input[type="email"], input[type="password"], input[type="tel"],
+input[type="number"], input[type="search"], textarea {
+    border: 1px solid var(--ui-line);
+    border-radius: var(--ui-radius);
+    padding: 0 14px;
+    color: var(--ui-ink);
+}
+textarea { padding: 10px 14px; }
+.product-details-right .button, .product-details-right .button-add-cart, .product-details-full .button {
+    min-height: 46px;
+    height: auto;
+    border-radius: 23px;
+    font-size: 15px;
+}
+input[type="date"], input[type="text"], input[type="email"], input[type="password"], input[type="tel"],
+input[type="number"], input[type="search"], textarea, select, select.normal {
+    border-radius: var(--ui-radius);
+    font-size: 15px;
+}
+@media (max-width: 767px) {
+    input[type="date"], input[type="text"], input[type="email"], input[type="password"], input[type="tel"],
+    input[type="number"], input[type="search"], textarea, select, select.normal { font-size: 16px; }
+}
+.product-details-right .button-add-cart {
+    display: inline-flex;
+    float: none;
+    clear: none;
+    margin-top: 16px;
+    padding: 0 28px;
+}
+@media (min-width: 768px) {
+    .dp-layout .product-details-right { align-items: flex-start; }
+    .dp-layout .product-details-right > * { max-width: 100%; }
+}
+/* quantity + add to cart on one row (wraps on very narrow screens) */
+.dp-buy { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-top: 18px; }
+.dp-buy .quantity { margin: 0; }
+.product-details-right .dp-buy .button-add-cart { margin: 0; flex: 1 1 200px; max-width: 320px; }
+/* ---------- floating "scroll to top": only after scrolling, smaller on phones, never over page content at the top ---------- */
+.scroll_top {
+    display: none !important;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    right: 16px !important;
+    bottom: 16px !important;
+    border-radius: 50%;
+    opacity: .92;
+}
+.scroll_top.is-visible { display: flex !important; }
+.scroll_top i { line-height: 1; }
+body.rh-lock .scroll_top { display: none !important; }
+
+/* ---------- cart (phones): breathing room and a properly centred CTA ---------- */
+@media (max-width: 767px) {
+    .shop_table.cart tr.cart-item-row { padding: 14px 12px; }
+    .shop_table.cart tr.cart-total-row { padding: 14px 12px; }
+    .shop_table.cart tr.cart-total-row .button { display: flex !important; width: 100%; }
+}
+/* ---------- tabs: active = dark + bold (+ theme underline), inactive = muted ---------- */
+.box-tabs.nav-tab { display: flex; flex-wrap: wrap; justify-content: center; gap: 4px 28px; }
+.box-tabs.nav-tab li { float: none; margin: 0; }
+.box-tabs.nav-tab li a { color: var(--ui-muted); padding-top: 10px; padding-bottom: 10px; }
+.box-tabs.nav-tab li a:hover { color: var(--ui-ink); }
+.box-tabs.nav-tab li.active a { color: var(--ui-ink); }
+
+/* ---------- statement tables: dates never wrap ---------- */
+table.group-product > tbody > tr > td:first-child,
+table.group-product > tbody > tr > th:first-child { white-space: nowrap; }
+
+/* ---------- checkout: saved delivery emails as selectable cards ---------- */
+.product-details-right .radio { margin: 0 0 10px; }
+.product-details-right .radio label {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    margin: 0;
+    padding: 12px 14px;
+    border: 1px solid var(--ui-line-soft);
+    border-radius: 12px;
+    cursor: pointer;
+    font-weight: 400;
+}
+.product-details-right .radio label:hover { border-color: #c9ccd1; }
+.product-details-right .radio input[type="radio"] { position: static; flex: 0 0 18px; width: 18px; height: 18px; margin: 0; }
+.product-details-right .radio input[type="radio"]:checked + .em-text .em-label { color: var(--ui-brand); }
+.product-details-right .radio label:has(input:checked) { border-color: var(--ui-brand); background: #fff9f5; }
+.em-text { display: flex; flex: 1 1 auto; flex-direction: column; min-width: 0; }
+.em-label { font-weight: 600; color: var(--ui-ink); }
+.em-addr { color: var(--ui-muted); overflow-wrap: anywhere; font-size: 14px; }
+.em-edit { flex: 0 0 auto; margin-left: auto; color: var(--ui-muted); font-size: 14px; text-decoration: underline; white-space: nowrap; }
+.em-edit:hover { color: var(--ui-brand); }
+/* ---------- contact: compact info cards (icon + text on one line) ---------- */
+.element-icon.style2 {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    min-height: 0;
+    height: auto;
+    margin: 0 0 12px;
+    padding: 14px 16px;
+    border: 1px solid var(--ui-line-soft);
+    border-radius: 12px;
+    background: #fff;
+    text-align: left;
+}
+.element-icon.style2 .icon {
+    position: static;
+    display: flex;
+    flex: 0 0 44px;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    margin: 0;
+    border-radius: 50%;
+    background: #fff4ee;
+    color: var(--ui-brand);
+    font-size: 24px;
+    line-height: 1;
+}
+.element-icon.style2 .icon span { color: inherit; font-size: inherit; line-height: 1; }
+.element-icon.style2 .content { position: static; display: block; margin: 0; padding: 0; text-align: left; }
+.element-icon.style2 .content .title { margin: 0; font-size: 15px; font-weight: 600; line-height: 1.4; color: var(--ui-ink); overflow-wrap: anywhere; }
+.product-details-right .radio { border: 0; padding: 0; background: transparent; box-shadow: none; }
+/* ---------- custom dropdown (.dd): same look as the language and account menus ---------- */
+.dd { position: relative; }
+.dd__btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    height: var(--ui-control-h);
+    padding: 0 16px;
+    border: 1px solid var(--ui-line);
+    border-radius: 22px;
+    background: #fff;
+    color: var(--ui-ink);
+    font-size: 15px;
+    text-align: left;
+    cursor: pointer;
+}
+.dd__btn:hover { border-color: #b8bec8; }
+.dd.is-open .dd__btn { border-color: var(--ui-brand); box-shadow: 0 0 0 3px rgba(255, 87, 0, .18); }
+.dd__prefix { color: var(--ui-muted); white-space: nowrap; }
+.dd__label { flex: 1 1 auto; min-width: 0; overflow: hidden; font-weight: 600; text-overflow: ellipsis; white-space: nowrap; }
+.dd__caret {
+    flex: 0 0 auto;
+    width: 0;
+    height: 0;
+    margin-left: auto;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    border-top: 5px solid var(--ui-muted);
+    transition: transform .15s ease;
+}
+.dd.is-open .dd__caret { transform: rotate(180deg); }
+.dd__menu {
+    position: absolute;
+    top: calc(100% + 6px);
+    right: 0;
+    z-index: 60;
+    min-width: max(100%, 190px);
+    margin: 0;
+    padding: 6px;
+    list-style: none;
+    border: 1px solid var(--ui-line-soft);
+    border-radius: 12px;
+    background: #fff;
+    box-shadow: 0 12px 30px rgba(15, 23, 42, .14);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(6px);
+    transition: opacity .15s ease, transform .15s ease, visibility 0s linear .15s;   /* hide only after the fade-out */
+}
+.dd.is-open .dd__menu { opacity: 1; visibility: visible; transform: none; transition-delay: 0s; }   /* visible at once: focus works immediately */
+.dd__opt {
+    display: block;
+    width: 100%;
+    padding: 10px 12px;
+    border: 0;
+    border-radius: 8px;
+    background: transparent;
+    color: var(--ui-ink);
+    font-size: 14px;
+    text-align: left;
+    cursor: pointer;
+}
+.dd__opt:hover { background: #f7f7f8; }
+.dd__opt[aria-selected="true"] { background: #fff4ee; color: var(--ui-brand); font-weight: 600; }
+.dd__btn:focus-visible, .dd__opt:focus-visible { outline: 2px solid var(--ui-brand); outline-offset: 2px; }
+@media (max-width: 480px) { .dd__prefix { display: none; } }
+@media (prefers-reduced-motion: reduce) { .dd__menu, .dd__caret { transition: none; } }

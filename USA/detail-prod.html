@@ -18,13 +18,14 @@
         <link rel="stylesheet" type="text/css" href="css/magnific-popup.css">
         <link rel="stylesheet" type="text/css" href="css/style.css">
     <link rel="stylesheet" type="text/css" href="css/usa-responsive.css">
+    <link rel="stylesheet" type="text/css" href="css/ui.css">
     <link rel="stylesheet" type="text/css" href="css/header.css">
     
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;700&display=swap" rel="stylesheet">
         <link rel="icon" type="" href="images/favicon.ico">
-    </head>
+</head>
 
 <body class="home">
             <a class="rh-skip" href="#main">Saltar al contenido</a>
@@ -82,7 +83,7 @@
     </header>
     <div class="product-details-full">
         <div class="container">
-            <div class="row">
+            <div class="row dp-layout">
                 <div class="col-md-4 col-sm-12">
                     <div class="product-detail-image">
                         <div class="main-image-wapper">
@@ -105,13 +106,14 @@
                             <p class="dp-value" id="dp-value"><strong class="dp-usd">$25.00</strong> <span class="dp-pts">2,500 Puntos</span></p>
                             <div class="dp-others" id="dp-others" hidden></div>
                         </div>
-                        <br>
-                        <div class="quantity">
-                            <a style="cursor: pointer;font-size: 20px;">-</a>
-                            <input type="text" size="4" class="input-text qty text text-center" title="Qty" value="01" name="quantity">
-                            <a style="cursor: pointer;font-size: 20px;">+</a>
+                        <div class="dp-buy">
+                            <div class="quantity">
+                                <a href="#" aria-label="Menos">-</a>
+                                <input type="text" size="4" class="input-text qty text text-center" title="Cantidad" aria-label="Cantidad" value="01" name="quantity">
+                                <a href="#" aria-label="Más">+</a>
+                            </div>
+                            <a class="button button-add-cart" href="#" data-quantity="1">Agregar al carrito</a>
                         </div>
-                        <a class="button button-add-cart" data-quantity="1" data-toggle="modal" data-target="#carrito">Agregar al carrito</a>
                     </div>
                 </div>
             </div>

@@ -35,3 +35,4 @@ Reset the demo: add `?reset=1` to any URL, or run `RiaProto.reset()` in the cons
 - `css/ui.css` - shared components (inputs, selects, buttons, quantity stepper, tabs, tables, modals, dropdown `.dd`, scrollbars).
 - `css/header.css`, `css/catalog.css`, `css/usa-responsive.css` - header, catalog panel/grid, responsive fixes and page components.
 - `tools/make-cards.js` - generates the card images from the catalog and the logos in `_logos/`.
+- `tools/bump-version.js` - adds `?v=<version>` to every local css/js URL. **Run it before each release** (`node tools/bump-version.js`): GitHub Pages caches files for 10 minutes, and without a new version a browser can show the new HTML with old css/js.

@@ -789,16 +789,16 @@
     function totalLabel(o) { return o.pay === 'points' ? fmt(orderPts(o)) + ' Puntos' : usd(orderUsd(o)); }
 
     function initCheckoutOk() {
-        var tiles = $$('div[style*="dashed"]');
+        var tiles = $$('.ord-card');
         if (tiles.length !== 4) return;
         var o = currentOrder();
         if (!o) { location.replace('index.html'); return; }
-        var span = $('h3 + p span'); if (span) span.textContent = o.email;
+        var span = $('.container > p.text-center span'); if (span) span.textContent = o.email;
         var vals = [fmtDate(o.date), o.no, o.email, totalLabel(o)];
-        tiles.forEach(function (t, i) { var p = $$('p', t)[1]; if (p) p.textContent = vals[i]; });
-        var row = tiles[0].closest('.row');
+        tiles.forEach(function (t, i) { var p = $('.ord-card__value', t); if (p) p.textContent = vals[i]; });
+        var row = tiles[0].parentNode;   // .ord-grid
         var list = document.createElement('div');
-        list.className = 'row margin-top-20';
+        list.className = 'row margin-top-20 ord-items';
         list.innerHTML = '<div class="col-md-12"><p style="font-weight:600;font-size:16px;color:#222">Gift Cards de tu canje</p>' +
             '<div class="widget widget_recent_product">' + itemsList(o) + '</div></div>';
         row.parentNode.insertBefore(list, row.nextSibling);
@@ -872,16 +872,15 @@
         if (!w || page() !== 'detail-canje.html') return;
         var o = currentOrder();
         if (!o) { location.replace('puntos.html'); return; }
-        function cell(icon, title, body) {
-            return '<div class="col-md-6"><h2 class="widget-title" style="font-weight:600"><span class="icon ' + icon + '"></span> ' + title + '</h2><div class="col-md-12">' + body + '</div></div>';
+        function card(icon, title, body) {
+            return '<div class="ord-card"><p class="ord-card__title"><span class="icon ' + icon + '"></span> ' + title + '</p><p class="ord-card__value">' + body + '</p></div>';
         }
         w.innerHTML =
-            '<div class="row">' + cell('pe-7s-news-paper', 'Nº pedido:', '<p>' + o.no + '</p>') + cell('pe-7s-date', 'Fecha:', '<p>' + fmtDate(o.date) + '</p>') + '</div>' +
-            '<div class="row">' + cell('pe-7s-mail', 'Correo de envío:', '<p>' + esc(o.email) + '</p>') + '</div>' +
-            '<div class="row">' + cell('pe-7s-cart', 'Detalle de canje:', itemsList(o)) +
-            '<div class="col-md-6"><h2 class="widget-title" style="font-weight:600"><span class="icon pe-7s-credit"></span> Total:</h2>' +
-            '<div class="col-md-12" style="background:#fb5701;padding-top:10px;padding-bottom:10px;border-radius:5px"><span class="price" style="font-weight:600;color:#fff">' + totalLabel(o) + '</span></div></div></div>';
-        refresh();
+            '<div class="ord-grid">' +
+            card('pe-7s-news-paper', 'Nº pedido:', o.no) + card('pe-7s-date', 'Fecha:', fmtDate(o.date)) +
+            card('pe-7s-mail', 'Correo de envío:', esc(o.email)) + card('pe-7s-credit', 'Total:', totalLabel(o)) +
+            '</div>' +
+            '<h3 class="ord-sub"><span class="icon pe-7s-cart"></span> Detalle de canje:</h3>' + itemsList(o);        refresh();
     }
 
     /* ---------- profile / delivery emails ---------- */

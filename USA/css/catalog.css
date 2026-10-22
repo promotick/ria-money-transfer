@@ -386,3 +386,12 @@
     .cat__toolbar .cat__sort { flex: 0 1 280px; }
     .cat__toolbar .cat__count { grid-row: auto; }
 }
+/* the card button is a flex box so its label sits on the vertical centre */
+.cat-card .add_to_cart_button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    padding: 0 12px;
+    line-height: 1.2;
+}

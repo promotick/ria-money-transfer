@@ -534,11 +534,35 @@
 
     // Brand-specific copy is chosen per language (the generic dictionary cannot cover it).
     function paintDetailText() {
-        var spec = $('#tab-1 p');
-        if (!spec || !detailBrand) return;
-        spec.textContent = isEn()
-            ? detailBrand.descEn + ' You will receive the code at the email you provide when redeeming. It is non-refundable.'
-            : detailBrand.desc + ' Recibirás el código en el correo electrónico que indiques al momento del canje. No es reembolsable.';
+        var spec = $('#dp-spec'), terms = $('#dp-terms');
+        if (!spec || !terms || !detailBrand) return;
+        var en = isEn(), b = detailBrand;
+        spec.innerHTML = '<p>' + (en
+            ? b.descEn + ' The value of this card is ' + usd(detailDenom) + ' (' + fmt(detailDenom * RATE) + ' Points). It is delivered by email within 3 to 5 business days, has no expiration date and is non-refundable.'
+            : b.desc + ' El valor de esta tarjeta es ' + usd(detailDenom) + ' (' + fmt(detailDenom * RATE) + ' Puntos). Se entrega por correo electrónico en 3 a 5 días hábiles, no tiene fecha de vencimiento y no es reembolsable.') + '</p>';
+        terms.innerHTML = en
+            ? '<p>The Gift Card is sent to the email you choose at checkout, within 3 to 5 business days. If you do not see it, check your spam folder.</p><p>Once the order is placed it cannot be cancelled or refunded. The brand\'s own conditions of use also apply.</p>'
+            : '<p>La Gift Card se envía al correo que elijas al canjear, en 3 a 5 días hábiles. Si no la ves, revisa tu carpeta de spam.</p><p>Una vez realizado el canje no se puede cancelar ni reembolsar. También aplican las condiciones de uso de la marca.</p>';
+    }    function initDetailTabs() {
+        var tabs = [].slice.call(document.querySelectorAll('.dp-info__tab'));
+        if (!tabs.length) return;
+        function show(tab) {
+            tabs.forEach(function (t) {
+                var on = t === tab;
+                t.classList.toggle('is-active', on);
+                t.setAttribute('aria-selected', on ? 'true' : 'false');
+                t.tabIndex = on ? 0 : -1;
+                document.getElementById(t.getAttribute('aria-controls')).hidden = !on;
+            });
+        }
+        tabs.forEach(function (t, i) {
+            t.addEventListener('click', function () { show(t); });
+            t.addEventListener('keydown', function (e) {
+                if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+                var n = tabs[(i + (e.key === 'ArrowRight' ? 1 : tabs.length - 1)) % tabs.length];
+                show(n); n.focus(); e.preventDefault();
+            });
+        });
     }
 
     var TITLES = {
@@ -571,15 +595,13 @@
         var crumbEnd = $('.product-details-right .breadcrumbs span'); if (crumbEnd) crumbEnd.textContent = b.name + ' $' + v;
 
         holder.innerHTML = '<strong class="dp-usd">' + usd(v) + '</strong> <span class="dp-pts">' + fmt(v * RATE) + ' Puntos</span>';
-        var others = $('#dp-others');
-        if (others) {
-            var rest = b.denoms.filter(function (d) { return d !== v; });
-            others.hidden = !rest.length;
-            others.innerHTML = rest.length ? '<p class="dp-others__title">Otros valores</p><div class="dp-others__list">' + rest.map(function (d) {
-                return '<a class="dp-chip" href="detail-prod.html?b=' + b.id + '&v=' + d + '">$' + d + '</a>';
-            }).join('') + '</div>' : '';
-        }
+        var back = $('#dp-back');
+        if (back) back.addEventListener('click', function (e) {
+            // came from the catalog: go back in history so its filters and sort are kept
+            if (document.referrer && /index\.html/.test(document.referrer) && history.length > 1) { e.preventDefault(); history.back(); }
+        });
         paintDetailText();
+        initDetailTabs();
         paintTitle();
 
         var btn = $('.product-details-right .button-add-cart');

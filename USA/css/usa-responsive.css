@@ -261,25 +261,26 @@ html.i18n-pending body {
     font-size: 12.5px;
     line-height: 1.5;
 }
-/* ---- Product detail: nominal value + other values of the same brand ---- */
+/* ---- Product detail: nominal value ---- */
 .dp-value { margin: 6px 0 4px; }
 .dp-usd { display: inline-block; margin-right: 8px; font-size: 30px; font-weight: 700; color: #1f2933; }
 .dp-pts { color: #6b7280; font-size: 15px; }
-.dp-others { margin: 14px 0 6px; }
-.dp-others[hidden] { display: none; }
-.dp-others__title { margin: 0 0 8px; font-size: 13px; font-weight: 600; color: #6b7280; }
-.dp-others__list { display: flex; flex-wrap: wrap; gap: 8px; }
-.dp-chip {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-width: 64px;
-    min-height: 40px;
-    padding: 0 14px;
-    border: 1px solid #e5e7eb;
-    border-radius: 20px;
-    color: #1f2933;
-    font-weight: 600;
-    text-decoration: none;
+/* back link on the detail page */
+.product-details-full a.dp-back { display: inline-flex; align-items: center; gap: 2px; min-height: 44px; margin: 4px 0 6px -6px; padding: 0 10px 0 4px; font-size: 15px; font-weight: 600; color: #1f2933; text-decoration: none; }
+.product-details-full a.dp-back:hover, .product-details-full a.dp-back:focus { color: #FF5700; text-decoration: none; }
+.product-details-full a.dp-back [class^="pe-7s-"] { font-size: 28px; line-height: 1; color: inherit; }
+
+/* ---- product detail: specifications / terms ---- */
+.dp-info { margin: 24px 0 40px; background: #fff; border: 1px solid #e5e7eb; border-radius: 16px; overflow: hidden; }
+.dp-info__tabs { display: flex; border-bottom: 1px solid #e5e7eb; background: #f9fafb; }
+.dp-info .dp-info__tab { flex: 1 1 0; min-width: 0; min-height: 52px; margin: 0; padding: 8px 12px; border: 0; border-bottom: 3px solid transparent; border-radius: 0; background: transparent; color: #6b7280; font: 600 15px/1.25 'Noto Sans', sans-serif; text-align: center; cursor: pointer; }
+.dp-info .dp-info__tab:hover { color: #1f2933; }
+.dp-info .dp-info__tab.is-active { color: #1f2933; background: #fff; border-bottom-color: #FF5700; }
+.dp-info__panel { padding: 18px 20px 20px; color: #374151; font-size: 15px; line-height: 1.55; }
+.dp-info__panel[hidden] { display: none; }
+@media (max-width: 575px) {
+    .dp-info { margin: 20px 0 32px; border-radius: 14px; }
+    .dp-info__panel { padding: 16px; }
 }
-.dp-chip:hover { border-color: #FF5700; color: #FF5700; }
+.dp-info__panel p { margin: 0 0 12px; }
+.dp-info__panel p:last-child { margin-bottom: 0; }

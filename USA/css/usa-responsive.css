@@ -269,3 +269,28 @@ html.i18n-pending body {
 .product-details-full a.dp-back { display: inline-flex; align-items: center; gap: 2px; min-height: 44px; margin: 4px 0 6px -6px; padding: 0 10px 0 4px; font-size: 15px; font-weight: 600; color: #1f2933; text-decoration: none; }
 .product-details-full a.dp-back:hover, .product-details-full a.dp-back:focus { color: #FF5700; text-decoration: none; }
 .product-details-full a.dp-back [class^="pe-7s-"] { font-size: 28px; line-height: 1; color: inherit; }
+
+/* ---- product detail: specifications / terms ---- */
+.dp-info { margin: 24px 0 40px; background: #fff; border: 1px solid #e5e7eb; border-radius: 16px; overflow: hidden; }
+.dp-info__tabs { display: flex; border-bottom: 1px solid #e5e7eb; background: #f9fafb; }
+.dp-info .dp-info__tab { flex: 1 1 0; min-width: 0; min-height: 52px; margin: 0; padding: 8px 12px; border: 0; border-bottom: 3px solid transparent; border-radius: 0; background: transparent; color: #6b7280; font: 600 15px/1.25 'Noto Sans', sans-serif; text-align: center; cursor: pointer; }
+.dp-info .dp-info__tab:hover { color: #1f2933; }
+.dp-info .dp-info__tab.is-active { color: #1f2933; background: #fff; border-bottom-color: #FF5700; }
+.dp-info__panel { padding: 8px 20px 20px; color: #374151; font-size: 15px; line-height: 1.55; }
+.dp-info__panel[hidden] { display: none; }
+.dp-specs { margin: 0; }
+.dp-specs__row { display: grid; grid-template-columns: 140px minmax(0, 1fr); gap: 12px; padding: 12px 0; border-bottom: 1px solid #eef0f3; }
+.dp-specs__row:last-child { border-bottom: 0; }
+.dp-specs dt { margin: 0; font-weight: 600; color: #6b7280; }
+.dp-specs dd { margin: 0; color: #1f2933; }
+.dp-terms { margin: 12px 0 4px; padding-left: 20px; }
+.dp-terms li { margin: 0 0 8px; }
+.dp-terms__links { display: flex; flex-wrap: wrap; gap: 8px 24px; margin: 14px 0 0; padding-top: 14px; border-top: 1px solid #eef0f3; }
+.dp-terms__links a { font-weight: 600; color: #FF5700; }
+.dp-terms__links a:hover { text-decoration: underline; }
+@media (max-width: 575px) {
+    .dp-info { margin: 20px 0 32px; border-radius: 14px; }
+    .dp-info__panel { padding: 4px 16px 16px; }
+    .dp-specs__row { grid-template-columns: 1fr; gap: 2px; padding: 10px 0; }
+    .dp-specs dt { font-size: 13px; }
+}

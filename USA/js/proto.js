@@ -534,11 +534,62 @@
 
     // Brand-specific copy is chosen per language (the generic dictionary cannot cover it).
     function paintDetailText() {
-        var spec = $('#tab-1 p');
-        if (!spec || !detailBrand) return;
-        spec.textContent = isEn()
-            ? detailBrand.descEn + ' You will receive the code at the email you provide when redeeming. It is non-refundable.'
-            : detailBrand.desc + ' Recibirás el código en el correo electrónico que indiques al momento del canje. No es reembolsable.';
+        var spec = $('#dp-spec'), terms = $('#dp-terms');
+        if (!spec || !terms || !detailBrand) return;
+        var en = isEn(), b = detailBrand;
+        var rows = en ? [
+            ['Product', b.name + ' digital Gift Card'],
+            ['Value', usd(detailDenom) + ' (' + fmt(detailDenom * RATE) + ' Points)'],
+            ['Valid in', 'United States'],
+            ['How to use', b.descEn],
+            ['Delivery', 'By email, within 3 to 5 business days'],
+            ['Expiration', 'No expiration date'],
+            ['Refunds', 'Non-refundable']
+        ] : [
+            ['Producto', 'Gift Card digital ' + b.name],
+            ['Valor', usd(detailDenom) + ' (' + fmt(detailDenom * RATE) + ' Puntos)'],
+            ['Válida en', 'Estados Unidos'],
+            ['Cómo usarla', b.desc],
+            ['Entrega', 'Por correo electrónico, en 3 a 5 días hábiles'],
+            ['Vencimiento', 'Sin fecha de vencimiento'],
+            ['Reembolso', 'No reembolsable']
+        ];
+        spec.innerHTML = '<dl class="dp-specs">' + rows.map(function (r) {
+            return '<div class="dp-specs__row"><dt>' + r[0] + '</dt><dd>' + r[1] + '</dd></div>';
+        }).join('') + '</dl>';
+        var items = en ? [
+            'The Gift Card is sent to the email you choose at checkout, within 3 to 5 business days. If you do not see it, check your spam folder.',
+            'Once the order is placed it cannot be cancelled or refunded.',
+            'The brand\'s own conditions of use also apply.'
+        ] : [
+            'La Gift Card se envía al correo que elijas al canjear, en 3 a 5 días hábiles. Si no la ves, revisa tu carpeta de spam.',
+            'Una vez realizado el canje no se puede cancelar ni reembolsar.',
+            'También aplican las condiciones de uso de la marca.'
+        ];
+        terms.innerHTML = '<ul class="dp-terms">' + items.map(function (i) { return '<li>' + i + '</li>'; }).join('') + '</ul>' +
+            '<p class="dp-terms__links"><a href="tyc.html">' + (en ? 'Read the full Program terms and conditions' : 'Ver los términos y condiciones completos del Programa') + '</a>' +
+            '<a href="contacto.html">' + (en ? 'Questions? Contact us' : '¿Dudas? Contáctanos') + '</a></p>';
+    }
+    function initDetailTabs() {
+        var tabs = [].slice.call(document.querySelectorAll('.dp-info__tab'));
+        if (!tabs.length) return;
+        function show(tab) {
+            tabs.forEach(function (t) {
+                var on = t === tab;
+                t.classList.toggle('is-active', on);
+                t.setAttribute('aria-selected', on ? 'true' : 'false');
+                t.tabIndex = on ? 0 : -1;
+                document.getElementById(t.getAttribute('aria-controls')).hidden = !on;
+            });
+        }
+        tabs.forEach(function (t, i) {
+            t.addEventListener('click', function () { show(t); });
+            t.addEventListener('keydown', function (e) {
+                if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+                var n = tabs[(i + (e.key === 'ArrowRight' ? 1 : tabs.length - 1)) % tabs.length];
+                show(n); n.focus(); e.preventDefault();
+            });
+        });
     }
 
     var TITLES = {
@@ -577,6 +628,7 @@
             if (document.referrer && /index\.html/.test(document.referrer) && history.length > 1) { e.preventDefault(); history.back(); }
         });
         paintDetailText();
+        initDetailTabs();
         paintTitle();
 
         var btn = $('.product-details-right .button-add-cart');

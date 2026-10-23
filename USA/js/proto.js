@@ -537,40 +537,13 @@
         var spec = $('#dp-spec'), terms = $('#dp-terms');
         if (!spec || !terms || !detailBrand) return;
         var en = isEn(), b = detailBrand;
-        var rows = en ? [
-            ['Product', b.name + ' digital Gift Card'],
-            ['Value', usd(detailDenom) + ' (' + fmt(detailDenom * RATE) + ' Points)'],
-            ['Valid in', 'United States'],
-            ['How to use', b.descEn],
-            ['Delivery', 'By email, within 3 to 5 business days'],
-            ['Expiration', 'No expiration date'],
-            ['Refunds', 'Non-refundable']
-        ] : [
-            ['Producto', 'Gift Card digital ' + b.name],
-            ['Valor', usd(detailDenom) + ' (' + fmt(detailDenom * RATE) + ' Puntos)'],
-            ['Válida en', 'Estados Unidos'],
-            ['Cómo usarla', b.desc],
-            ['Entrega', 'Por correo electrónico, en 3 a 5 días hábiles'],
-            ['Vencimiento', 'Sin fecha de vencimiento'],
-            ['Reembolso', 'No reembolsable']
-        ];
-        spec.innerHTML = '<dl class="dp-specs">' + rows.map(function (r) {
-            return '<div class="dp-specs__row"><dt>' + r[0] + '</dt><dd>' + r[1] + '</dd></div>';
-        }).join('') + '</dl>';
-        var items = en ? [
-            'The Gift Card is sent to the email you choose at checkout, within 3 to 5 business days. If you do not see it, check your spam folder.',
-            'Once the order is placed it cannot be cancelled or refunded.',
-            'The brand\'s own conditions of use also apply.'
-        ] : [
-            'La Gift Card se envía al correo que elijas al canjear, en 3 a 5 días hábiles. Si no la ves, revisa tu carpeta de spam.',
-            'Una vez realizado el canje no se puede cancelar ni reembolsar.',
-            'También aplican las condiciones de uso de la marca.'
-        ];
-        terms.innerHTML = '<ul class="dp-terms">' + items.map(function (i) { return '<li>' + i + '</li>'; }).join('') + '</ul>' +
-            '<p class="dp-terms__links"><a href="tyc.html">' + (en ? 'Read the full Program terms and conditions' : 'Ver los términos y condiciones completos del Programa') + '</a>' +
-            '<a href="contacto.html">' + (en ? 'Questions? Contact us' : '¿Dudas? Contáctanos') + '</a></p>';
-    }
-    function initDetailTabs() {
+        spec.innerHTML = '<p>' + (en
+            ? b.descEn + ' The value of this card is ' + usd(detailDenom) + ' (' + fmt(detailDenom * RATE) + ' Points). It is delivered by email within 3 to 5 business days, has no expiration date and is non-refundable.'
+            : b.desc + ' El valor de esta tarjeta es ' + usd(detailDenom) + ' (' + fmt(detailDenom * RATE) + ' Puntos). Se entrega por correo electrónico en 3 a 5 días hábiles, no tiene fecha de vencimiento y no es reembolsable.') + '</p>';
+        terms.innerHTML = en
+            ? '<p>The Gift Card is sent to the email you choose at checkout, within 3 to 5 business days. If you do not see it, check your spam folder.</p><p>Once the order is placed it cannot be cancelled or refunded. The brand\'s own conditions of use also apply.</p>'
+            : '<p>La Gift Card se envía al correo que elijas al canjear, en 3 a 5 días hábiles. Si no la ves, revisa tu carpeta de spam.</p><p>Una vez realizado el canje no se puede cancelar ni reembolsar. También aplican las condiciones de uso de la marca.</p>';
+    }    function initDetailTabs() {
         var tabs = [].slice.call(document.querySelectorAll('.dp-info__tab'));
         if (!tabs.length) return;
         function show(tab) {

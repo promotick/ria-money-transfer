@@ -571,6 +571,11 @@
         var crumbEnd = $('.product-details-right .breadcrumbs span'); if (crumbEnd) crumbEnd.textContent = b.name + ' $' + v;
 
         holder.innerHTML = '<strong class="dp-usd">' + usd(v) + '</strong> <span class="dp-pts">' + fmt(v * RATE) + ' Puntos</span>';
+        var back = $('#dp-back');
+        if (back) back.addEventListener('click', function (e) {
+            // came from the catalog: go back in history so its filters and sort are kept
+            if (document.referrer && /index\.html/.test(document.referrer) && history.length > 1) { e.preventDefault(); history.back(); }
+        });
         paintDetailText();
         paintTitle();
 

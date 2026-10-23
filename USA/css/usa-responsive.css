@@ -261,19 +261,11 @@ html.i18n-pending body {
     font-size: 12.5px;
     line-height: 1.5;
 }
-/* ---- Product detail: nominal value + other values of the same brand ---- */
+/* ---- Product detail: nominal value ---- */
 .dp-value { margin: 6px 0 4px; }
 .dp-usd { display: inline-block; margin-right: 8px; font-size: 30px; font-weight: 700; color: #1f2933; }
 .dp-pts { color: #6b7280; font-size: 15px; }
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-width: 64px;
-    min-height: 40px;
-    padding: 0 14px;
-    border: 1px solid #e5e7eb;
-    border-radius: 20px;
-    color: #1f2933;
-    font-weight: 600;
-    text-decoration: none;
-}
+/* back link on the detail page */
+.product-details-full a.dp-back { display: inline-flex; align-items: center; gap: 2px; min-height: 44px; margin: 4px 0 6px -6px; padding: 0 10px 0 4px; font-size: 15px; font-weight: 600; color: #1f2933; text-decoration: none; }
+.product-details-full a.dp-back:hover, .product-details-full a.dp-back:focus { color: #FF5700; text-decoration: none; }
+.product-details-full a.dp-back [class^="pe-7s-"] { font-size: 28px; line-height: 1; color: inherit; }

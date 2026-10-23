@@ -11,7 +11,7 @@
     --rh-muted: #6b7280;
     --rh-line: #e5e7eb;
     --rh-bar: 56px;
-    --rh-search: 52px;
+    --rh-search: 60px;
 }
 
 .rh-skip {
@@ -30,7 +30,7 @@
 
 .rh {
     position: sticky;
-    top: calc(-1 * var(--rh-search));
+    top: -50px;                 /* logo row (6px + 44px) scrolls away, the search row stays */
     z-index: 1000;
     background: #fff;
     box-shadow: 0 1px 0 var(--rh-line), 0 3px 10px rgba(0, 0, 0, .05);
@@ -104,7 +104,7 @@
     display: flex;
     align-items: center;
     height: var(--rh-search);
-    padding: 0 0 8px;
+    padding: 8px 0;             /* top gap keeps the box off the screen edge once the logo row scrolls away */
     margin: 0;
 }
 .rh__search input {

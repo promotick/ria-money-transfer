@@ -571,14 +571,6 @@
         var crumbEnd = $('.product-details-right .breadcrumbs span'); if (crumbEnd) crumbEnd.textContent = b.name + ' $' + v;
 
         holder.innerHTML = '<strong class="dp-usd">' + usd(v) + '</strong> <span class="dp-pts">' + fmt(v * RATE) + ' Puntos</span>';
-        var others = $('#dp-others');
-        if (others) {
-            var rest = b.denoms.filter(function (d) { return d !== v; });
-            others.hidden = !rest.length;
-            others.innerHTML = rest.length ? '<p class="dp-others__title">Otros valores</p><div class="dp-others__list">' + rest.map(function (d) {
-                return '<a class="dp-chip" href="detail-prod.html?b=' + b.id + '&v=' + d + '">$' + d + '</a>';
-            }).join('') + '</div>' : '';
-        }
         paintDetailText();
         paintTitle();
 
